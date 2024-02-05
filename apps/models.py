@@ -1,26 +1,41 @@
+from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
+class CustomUserManager(BaseUserManager):
+    def create_user(self, phone, password=None, **extra_fields):
+        if not phone:
+            raise ValueError('The Phone Number field must be set')
+
+        user = self.model(phone=phone, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, phone, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+
+        return self.create_user(phone, password, **extra_fields)
+
+
 class User(AbstractUser):
     image = models.ImageField(upload_to='users/images/', null=True, blank=True, default='apps/assets/img/logo.png')
-    phone = models.CharField(max_length=25)
-    email = models.EmailField(unique=True)  # Add unique=True here
+    phone = models.CharField(max_length=25, unique=True)
+    email = models.EmailField(unique=True)
 
-    USERNAME_FIELD = 'email'
+    objects = CustomUserManager()
+
+    USERNAME_FIELD = 'phone'
     REQUIRED_FIELDS = []
 
-    # def save(self, *args, **kwargs):
-    #     first_name = self.first_name
-    #     print(first_name)
-    #
-    #     return super().save(*args, **kwargs)
+    username = None
 
 
 class Product(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
-    image = models.ImageField(upload_to='products/images/')
     price = models.FloatField()
 
     class Meta:
@@ -30,3 +45,6 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+
+class ProductImage(models.Model):
+    image = models.ImageField(upload_to='products/images/')
