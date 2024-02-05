@@ -1,6 +1,7 @@
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from jsonfield import JSONField
 
 
 class CustomUserManager(BaseUserManager):
@@ -37,6 +38,7 @@ class Product(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     price = models.FloatField()
+    specifications = JSONField(default=dict)
 
     class Meta:
         verbose_name = 'Mahsulot'
@@ -47,4 +49,8 @@ class Product(models.Model):
 
 
 class ProductImage(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
     image = models.ImageField(upload_to='products/images/')
+
+    def __str__(self):
+        return self.product.name
