@@ -1,9 +1,9 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView, CreateView, FormView
+from django.views.generic import TemplateView, CreateView, FormView, ListView
 from django.core.mail import send_mail
 
 from apps.forms import UserRegisterForm
-from apps.models import User
+from apps.models import User, Product
 
 
 class MainTemplateView(TemplateView):
@@ -18,15 +18,17 @@ class SettingsTemplateView(TemplateView):
     template_name = 'apps/user/settings.html'
 
 
-class ProductTemplateView(TemplateView):
+class ProductListView(ListView):
+    model = Product
     template_name = 'apps/product/product-grid.html'
+    context_object_name = 'products'
 
 
 class ProductDetailsTemplateView(TemplateView):
     template_name = 'apps/product/product-details.html'
 
 
-class RegisterTemplateView(CreateView):
+class RegisterCreateView(CreateView):
     model = User
     form_class = UserRegisterForm
     template_name = 'apps/auth/register.html'

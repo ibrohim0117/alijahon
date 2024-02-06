@@ -2,6 +2,7 @@ from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from jsonfield import JSONField
+from django.utils.text import slugify
 
 
 class CustomUserManager(BaseUserManager):
@@ -39,6 +40,7 @@ class Product(models.Model):
     description = models.TextField()
     price = models.FloatField()
     specifications = JSONField(default=dict)
+    slug = models.SlugField(unique=True, max_length=255)
 
     class Meta:
         verbose_name = 'Mahsulot'
@@ -46,6 +48,10 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
 
 
 class ProductImage(models.Model):
