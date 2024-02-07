@@ -1,8 +1,8 @@
+from ckeditor.fields import RichTextField
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.db.models import ForeignKey, CASCADE, DateTimeField, ImageField, CharField, EmailField, Model, TextField, \
-    PositiveIntegerField, SlugField
-from django.forms import FloatField
+    PositiveIntegerField, SlugField, TextChoices, FloatField
 from jsonfield import JSONField
 from django.utils.text import slugify
 
@@ -24,27 +24,25 @@ class CustomUserManager(BaseUserManager):
         return self.create_user(phone, password, **extra_fields)
 
 
-class BaseModel(Model):
+class BaseModel:
     created_at = DateTimeField(auto_now_add=True)
     update_at = DateTimeField(auto_now=True)
 
 
 # proxymodel
-class User(AbstractUser, BaseModel):
-
-    TEXT_CHOICES = [
-        (0, 'Users'),
-        (1, 'Admin'),
-        (2, 'Couriers'),
-        (3, 'Managers'),
-        (4, 'Operators'),
-        (5, 'Spams')
-    ]
+class User(AbstractUser):
+    class Type(TextChoices):
+        Users = 0, 'Users'
+        Admin = 1, 'Admin'
+        Couriers = 2, 'Couriers'
+        Managers = 3, 'Managers'
+        Operators = 4, 'Operators'
+        Spams = 5, 'Spams'
 
     text_choice = CharField(
         max_length=20,
-        choices=TEXT_CHOICES,
-        default='0',
+        choices=Type.choices,
+        default=Type.Users,
     )
 
     image = ImageField(upload_to='users/images/', null=True, blank=True, default='apps/assets/img/logo.png')
@@ -58,19 +56,30 @@ class User(AbstractUser, BaseModel):
 
     username = None
 
+    class Meta:
+        verbose_name = 'Foydalanuvchi'
+        verbose_name_plural = 'Foydalanuvchilar'
 
-class ProductCategoryModel(Model, BaseModel):
+
+class Category(BaseModel, Model):
     name = CharField(max_length=25)
 
+    class Meta:
+        verbose_name = 'Kategorya'
+        verbose_name_plural = 'Kategoryalar'
 
-class Product(Model):
+    def __str__(self):
+        return self.name
+
+
+class Product(BaseModel, Model):
     name = CharField(max_length=255)
-    description = TextField()
+    description = RichTextField()
     price = FloatField()
     quantity = PositiveIntegerField(default=0)
     specifications = JSONField(default=dict)
     slug = SlugField(unique=True, max_length=255, blank=True, null=True)
-    category = ForeignKey('apps.ProductCategoryModel', CASCADE, on_delete=True)
+    category = ForeignKey('apps.Category', CASCADE)
 
     class Meta:
         verbose_name = 'Mahsulot'
@@ -88,7 +97,7 @@ class Product(Model):
         super().save(*args, **kwargs)
 
 
-class ProductImage(Model, BaseModel):
+class ProductImage(BaseModel, Model):
     product = ForeignKey(Product, CASCADE, related_name='images')
     image = ImageField(upload_to='products/images/')
 
@@ -100,8 +109,13 @@ class ProductImage(Model, BaseModel):
         verbose_name_plural = 'Mahsulotlar rasmlari'
 
 
-class Wishlist(Model, BaseModel):
+class Wishlist(BaseModel, Model):
     user = ForeignKey('apps.User', CASCADE)
-    product = ForeignKey('apps.Product', CASCADE, on_delete=True)
-    updated_at = DateTimeField(auto_now=True)
-    created_at = DateTimeField(auto_now_add=True)
+    product = ForeignKey('apps.Product', CASCADE)
+
+    def __str__(self):
+        return self.product.name
+
+    class Meta:
+        verbose_name = 'Buyurtma'
+        verbose_name_plural = 'Buyurtmalar'
