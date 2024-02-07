@@ -3,6 +3,7 @@ from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.db.models import ForeignKey, CASCADE, DateTimeField, ImageField, CharField, EmailField, Model, TextField, \
     PositiveIntegerField, SlugField, TextChoices, FloatField
+from django_resized import ResizedImageField
 from jsonfield import JSONField
 from django.utils.text import slugify
 
@@ -99,7 +100,7 @@ class Product(BaseModel, Model):
 
 class ProductImage(BaseModel, Model):
     product = ForeignKey(Product, CASCADE, related_name='images')
-    image = ImageField(upload_to='products/images/')
+    image = ResizedImageField(upload_to='products/images/', size=[1000, 800])
 
     def __str__(self):
         return self.product.name
