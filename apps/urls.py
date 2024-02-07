@@ -2,7 +2,7 @@ from django.urls import path
 
 from apps.views import (MainTemplateView, ProfileTemplateView,
                         SettingsTemplateView, ProductListView,
-                        ProductDetailsTemplateView, RegisterCreateView,
+                        ProductDetailView, RegisterCreateView,
                         LoginTemplateView, ConfirmMailTemplateView,
                         ForgetPasswordTemplateView, LockScreenTemplateView,
                         LogoutTemplateView, ResetPasswordTemplateView)
@@ -12,7 +12,7 @@ urlpatterns = [
     path('profile', ProfileTemplateView.as_view(), name='profile'),
     path('settings', SettingsTemplateView.as_view(), name='settings'),
     path('', ProductListView.as_view(), name='products'),
-    path('product_detail', ProductDetailsTemplateView.as_view(), name='product_detail'),
+    path('product_detail/<slug:slug>/', ProductDetailView.as_view(), name='product_detail'),
 
     path('register', RegisterCreateView.as_view(), name='register'),
     path('login', LoginTemplateView.as_view(), name='login'),

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView, CreateView, FormView, ListView
+from django.views.generic import TemplateView, CreateView, FormView, ListView, DetailView
 from django.core.mail import send_mail
 
 from apps.forms import UserRegisterForm
@@ -24,8 +24,11 @@ class ProductListView(ListView):
     context_object_name = 'products'
 
 
-class ProductDetailsTemplateView(TemplateView):
+class ProductDetailView(DetailView):
     template_name = 'apps/product/product-details.html'
+    model = Product
+    context_object_name = 'product'
+    slug_url_kwarg = 'slug'
 
 
 class RegisterCreateView(CreateView):

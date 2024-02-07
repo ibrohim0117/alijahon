@@ -1,11 +1,19 @@
 from django.contrib import admin
-
-# Register your models here.
 from django.contrib.auth.models import Group
 
 from apps.models import Product, User, ProductImage
 
-admin.site.register(Product)
+
+class ProductImageInline(admin.StackedInline):
+    model = ProductImage
+    extra = 1
+
+
+@admin.register(Product)
+class ProductModelAdmin(admin.ModelAdmin):
+    inlines = [ProductImageInline]
+    list_display = ('name', 'description', 'price', 'quantity', 'is_in_stock')
+
+
 admin.site.register(User)
-admin.site.register(ProductImage)
 admin.site.unregister(Group)
