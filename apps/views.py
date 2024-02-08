@@ -22,6 +22,7 @@ class ProductListView(ListView):
     model = Product
     template_name = 'apps/product/product-grid.html'
     context_object_name = 'products'
+    paginate_by = 6
 
 
 class ProductDetailView(DetailView):

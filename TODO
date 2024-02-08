@@ -24,4 +24,10 @@ TASK
 11. user html ko`chirish
 12. userning telefon nomeriga validator qoshish (models da)
 13. user phone ga validator qoyish
-14. django resized
+14. django resiz
+
+
+OQISHga
+
+django meta class
+django templatetags

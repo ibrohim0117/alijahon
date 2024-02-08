@@ -1,6 +1,7 @@
 from ckeditor.fields import RichTextField
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import RegexValidator
 from django.db.models import ForeignKey, CASCADE, DateTimeField, ImageField, CharField, EmailField, Model, TextField, \
     PositiveIntegerField, SlugField, TextChoices, FloatField
 from django_resized import ResizedImageField
@@ -29,25 +30,29 @@ class BaseModel:
     created_at = DateTimeField(auto_now_add=True)
     update_at = DateTimeField(auto_now=True)
 
+    class Meta:
+        abstract = True
+
 
 # proxymodel
 class User(AbstractUser):
     class Type(TextChoices):
-        Users = 0, 'Users'
-        Admin = 1, 'Admin'
-        Couriers = 2, 'Couriers'
-        Managers = 3, 'Managers'
-        Operators = 4, 'Operators'
-        Spams = 5, 'Spams'
+        USERS = 0, 'Users'
+        ADMIN = 1, 'Admin'
+        COURIER = 2, 'Couriers'
+        MANAGER = 3, 'Managers'
+        OPERATOR = 4, 'Operators'
 
     text_choice = CharField(
         max_length=20,
         choices=Type.choices,
-        default=Type.Users,
+        default=Type.USERS,
     )
 
     image = ImageField(upload_to='users/images/', null=True, blank=True, default='apps/assets/img/logo.png')
-    phone = CharField(max_length=25, unique=True)
+    phone_regex = RegexValidator(regex=r'^\+998\d{9}$|^\d{9}$',
+                                 message="Phone number must be entered in the format: '+999999999'. Up to 25 digits allowed.")
+    phone = CharField(max_length=25, unique=True, validators=[phone_regex])
     email = EmailField(unique=True)
 
     objects = CustomUserManager()
@@ -100,7 +105,7 @@ class Product(BaseModel, Model):
 
 class ProductImage(BaseModel, Model):
     product = ForeignKey(Product, CASCADE, related_name='images')
-    image = ResizedImageField(upload_to='products/images/', size=[1000, 800])
+    image = ResizedImageField(upload_to='products/images/', size=[1000, 800], crop=['middle', 'center'])
 
     def __str__(self):
         return self.product.name
