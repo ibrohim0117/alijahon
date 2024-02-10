@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.contrib.auth import authenticate, login
+from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, CreateView, FormView, ListView, DetailView
 from django.core.mail import send_mail
 
-from apps.forms import UserRegisterForm
+from apps.forms import UserRegisterForm, UserLoginForm
 from apps.models import User, Product
 
 
@@ -50,14 +51,6 @@ class RegisterCreateView(CreateView):
 
         return res
 
-
-# class RegisterForm(FormView):
-#     model = User
-#     form_class = UserRegisterForm
-#     template_name = 'apps/auth/register.html'
-#     success_url = '/'
-
-
 # def RegisterTemplateView(requests):
 #     if requests.POST:
 #         data = UserRegisterForm(requests.POST)
@@ -70,8 +63,25 @@ class RegisterCreateView(CreateView):
 #     return render(requests, 'apps/auth/register.html')
 
 
-class LoginTemplateView(TemplateView):
+class LoginFormView(FormView):
+    form_class = UserLoginForm
     template_name = 'apps/auth/login.html'
+    success_url = '/'
+
+    def form_valid(self, form):
+        phone = form.cleaned_data.get("phone")
+        password = form.cleaned_data.get("password")
+        # user = authenticate(self.request, username=phone, password=password)
+        user = User.objects.filter(phone=phone, password=password).first()
+        print(phone)
+        print(password)
+        print(user)
+        if user:
+            login(self.request, user)
+            print('ok')
+            return redirect('/')
+
+        return super().form_valid(form)
 
 
 class ConfirmMailTemplateView(TemplateView):

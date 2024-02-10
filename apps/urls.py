@@ -3,7 +3,7 @@ from django.urls import path
 from apps.views import (MainTemplateView, ProfileTemplateView,
                         SettingsTemplateView, ProductListView,
                         ProductDetailView, RegisterCreateView,
-                        LoginTemplateView, ConfirmMailTemplateView,
+                        LoginFormView, ConfirmMailTemplateView,
                         ForgetPasswordTemplateView, LockScreenTemplateView,
                         LogoutTemplateView, ResetPasswordTemplateView)
 
@@ -15,7 +15,7 @@ urlpatterns = [
     path('productdetail/<slug:slug>/', ProductDetailView.as_view(), name='product_detail'),
 
     path('register', RegisterCreateView.as_view(), name='register'),
-    path('login', LoginTemplateView.as_view(), name='login'),
+    path('login', LoginFormView.as_view(), name='login'),
     path('confirm_mail', ConfirmMailTemplateView.as_view(), name='confirm_mail'),
     path('forget_password', ForgetPasswordTemplateView.as_view(), name='forget_password'),
     path('lockscreen', LockScreenTemplateView.as_view(), name='lockscreen'),
