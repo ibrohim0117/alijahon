@@ -1,10 +1,11 @@
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.views import LogoutView
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, CreateView, FormView, ListView, DetailView
-from django.core.mail import send_mail
-
+from django.urls import reverse_lazy
 from apps.forms import UserRegisterForm, UserLoginForm
 from apps.models import User, Product
+from apps.tasks import task_send_mail
 
 
 class MainTemplateView(TemplateView):
@@ -20,10 +21,11 @@ class SettingsTemplateView(TemplateView):
 
 
 class ProductListView(ListView):
-    model = Product
+    queryset = Product.objects.all()
     template_name = 'apps/product/product-grid.html'
     context_object_name = 'products'
     paginate_by = 6
+    ordering = ('-id', )
 
 
 class ProductDetailView(DetailView):
@@ -42,25 +44,8 @@ class RegisterCreateView(CreateView):
     def form_valid(self, form):
         res = super().form_valid(form)
         email = form.cleaned_data.get('email')
-        subject = 'test'
-        message = 'test'
-        from_email = 'ibrohim.dev.uz@gmail.com'
-        recipient_list = [email]
-
-        send_mail(subject, message, from_email, recipient_list)
-
+        task_send_mail.delay(email)
         return res
-
-# def RegisterTemplateView(requests):
-#     if requests.POST:
-#         data = UserRegisterForm(requests.POST)
-#         password = requests.POST.get('password')
-#         confirm_password = requests.POST.get('confirm_password')
-#         if password == confirm_password:
-#             if data.is_valid():
-#                 data.save()
-#                 print('Ishladi')
-#     return render(requests, 'apps/auth/register.html')
 
 
 class LoginFormView(FormView):
@@ -71,16 +56,10 @@ class LoginFormView(FormView):
     def form_valid(self, form):
         phone = form.cleaned_data.get("phone")
         password = form.cleaned_data.get("password")
-        # user = authenticate(self.request, username=phone, password=password)
-        user = User.objects.filter(phone=phone, password=password).first()
-        print(phone)
-        print(password)
-        print(user)
-        if user:
+        user = User.objects.filter(phone=phone).first()
+        if user and user.check_password(password):
             login(self.request, user)
-            print('ok')
             return redirect('/')
-
         return super().form_valid(form)
 
 
@@ -91,13 +70,17 @@ class ConfirmMailTemplateView(TemplateView):
 class ForgetPasswordTemplateView(TemplateView):
     template_name = 'apps/auth/forgot-password.html'
 
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
+
 
 class LockScreenTemplateView(TemplateView):
     template_name = 'apps/auth/lock-screen.html'
 
 
-class LogoutTemplateView(TemplateView):
-    template_name = 'apps/auth/lock-screen.html'
+class LogoutRedirectView(LogoutView):
+    # template_name = 'apps/auth/lock-screen.html'
+    next_page = reverse_lazy('login')
 
 
 class ResetPasswordTemplateView(TemplateView):

@@ -1,3 +1,4 @@
+from django.contrib.auth.hashers import make_password
 from django.db import models
 from django.forms import ModelForm
 from django import forms
@@ -13,16 +14,17 @@ class UserRegisterForm(ModelForm):
         model = User
         fields = ['first_name', 'email', 'password', 'phone', 'confirm_password']
 
-    def clean(self):
-        cleaned_data = super().clean()
-        password = cleaned_data.get('password')
-        confirm_password = cleaned_data.get('confirm_password')
-        phone = cleaned_data.get('phone')
+    def clean_password(self):
+        password = self.cleaned_data.get('password')
+        confirm_password = self.cleaned_data.get('confirm_password')
         if password and confirm_password and password != confirm_password:
             raise forms.ValidationError('Parollar bir xil bo\'lishi kerak')
-        if validate_phone_number(phone):
-            raise forms.ValidationError('Telefon raqam xato')
-        return cleaned_data
+        return make_password(password)
+
+    # def clean(self):
+    #     cleaned_data = super().clean()
+    #     phone = cleaned_data.get('phone')
+    #     return cleaned_data
 
 
 class UserLoginForm(forms.Form):

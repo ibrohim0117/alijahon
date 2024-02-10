@@ -5,21 +5,21 @@ from apps.views import (MainTemplateView, ProfileTemplateView,
                         ProductDetailView, RegisterCreateView,
                         LoginFormView, ConfirmMailTemplateView,
                         ForgetPasswordTemplateView, LockScreenTemplateView,
-                        LogoutTemplateView, ResetPasswordTemplateView)
+                        LogoutRedirectView, ResetPasswordTemplateView)
 
 urlpatterns = [
     path('main', MainTemplateView.as_view(), name='main'),
     path('profile', ProfileTemplateView.as_view(), name='profile'),
     path('settings', SettingsTemplateView.as_view(), name='settings'),
     path('', ProductListView.as_view(), name='products'),
-    path('productdetail/<slug:slug>/', ProductDetailView.as_view(), name='product_detail'),
+    path('product/<slug:slug>', ProductDetailView.as_view(), name='product_detail'),
 
     path('register', RegisterCreateView.as_view(), name='register'),
     path('login', LoginFormView.as_view(), name='login'),
     path('confirm_mail', ConfirmMailTemplateView.as_view(), name='confirm_mail'),
     path('forget_password', ForgetPasswordTemplateView.as_view(), name='forget_password'),
     path('lockscreen', LockScreenTemplateView.as_view(), name='lockscreen'),
-    path('logout', LogoutTemplateView.as_view(), name='logout'),
+    path('logout', LogoutRedirectView.as_view(), name='logout'),
     path('reset_password', ResetPasswordTemplateView.as_view(), name='logout'),
 ]
 

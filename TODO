@@ -31,3 +31,13 @@ OQISHga
 
 django meta class
 django templatetags
+
+
+redis ni dockerda ishlatish
+docker run -p 6379:6379 -it redis/redis-stack:latest
+
+
+docker run --name pg_db -e POSTGRES_PASSWORD=1 -p 5433:5432 -v pgdata:/var/lib/postgresql/data -d postgres:alpine
+
+
+

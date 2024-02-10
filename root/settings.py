@@ -79,7 +79,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'root.wsgi.application'
-
+APPEND_SLASH = True
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
@@ -144,6 +144,9 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'ibrohim.dev.uz@gmail.com'
 EMAIL_HOST_PASSWORD = 'auvi rwqc epbn ewhv '     # https://myaccount.google.com/apppasswords  dan kiraman
+
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
 
 
 JAZZMIN_SETTINGS = {
