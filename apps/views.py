@@ -1,8 +1,7 @@
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.views import LogoutView
-from django.shortcuts import render, redirect
+from django.contrib.auth import login, logout
+from django.shortcuts import redirect
+from django.views import View
 from django.views.generic import TemplateView, CreateView, FormView, ListView, DetailView
-from django.urls import reverse_lazy
 from apps.forms import UserRegisterForm, UserLoginForm
 from apps.models import User, Product
 from apps.tasks import task_send_mail
@@ -24,7 +23,7 @@ class ProductListView(ListView):
     queryset = Product.objects.all()
     template_name = 'apps/product/product-grid.html'
     context_object_name = 'products'
-    paginate_by = 6
+    paginate_by = 3
     ordering = ('-id', )
 
 
@@ -78,9 +77,12 @@ class LockScreenTemplateView(TemplateView):
     template_name = 'apps/auth/lock-screen.html'
 
 
-class LogoutRedirectView(LogoutView):
+class LogoutRedirectView(View):
     # template_name = 'apps/auth/lock-screen.html'
-    next_page = reverse_lazy('login')
+    # next_page = reverse_lazy('login')
+    def get(self, *args, **kwargs):
+        logout(self.request)
+        return redirect('login')
 
 
 class ResetPasswordTemplateView(TemplateView):

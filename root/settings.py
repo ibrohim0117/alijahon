@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     # install apps
     'ckeditor',
     'ckeditor_uploader',
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [
@@ -147,6 +148,8 @@ EMAIL_HOST_PASSWORD = 'auvi rwqc epbn ewhv '     # https://myaccount.google.com/
 
 
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_CACHE_BACKEND = 'django-cache'
 
 
 JAZZMIN_SETTINGS = {

@@ -8,10 +8,10 @@ from apps.views import (MainTemplateView, ProfileTemplateView,
                         LogoutRedirectView, ResetPasswordTemplateView)
 
 urlpatterns = [
+    path('', ProductListView.as_view(), name='products'),
     path('main', MainTemplateView.as_view(), name='main'),
     path('profile', ProfileTemplateView.as_view(), name='profile'),
     path('settings', SettingsTemplateView.as_view(), name='settings'),
-    path('', ProductListView.as_view(), name='products'),
     path('product/<slug:slug>', ProductDetailView.as_view(), name='product_detail'),
 
     path('register', RegisterCreateView.as_view(), name='register'),
