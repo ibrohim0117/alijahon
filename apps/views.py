@@ -23,7 +23,7 @@ class ProductListView(ListView):
     queryset = Product.objects.all()
     template_name = 'apps/product/product-grid.html'
     context_object_name = 'products'
-    paginate_by = 3
+    paginate_by = 6
     ordering = ('-id', )
 
 

@@ -43,7 +43,7 @@ class User(AbstractUser):
         MANAGER = 3, 'Managers'
         OPERATOR = 4, 'Operators'
 
-    text_choice = CharField(
+    type_choice = CharField(
         max_length=20,
         choices=Type.choices,
         default=Type.USERS,
