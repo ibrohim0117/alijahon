@@ -1,9 +1,12 @@
+from datetime import datetime, timedelta
+
 from ckeditor.fields import RichTextField
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 from django.db.models import ForeignKey, CASCADE, DateTimeField, ImageField, CharField, EmailField, Model, TextField, \
     PositiveIntegerField, SlugField, TextChoices, FloatField
+from django.utils.timezone import now
 from django_resized import ResizedImageField
 from jsonfield import JSONField
 from django.utils.text import slugify
@@ -26,7 +29,7 @@ class CustomUserManager(BaseUserManager):
         return self.create_user(phone, password, **extra_fields)
 
 
-class BaseModel:
+class BaseModel(Model):
     created_at = DateTimeField(auto_now_add=True)
     update_at = DateTimeField(auto_now=True)
 
@@ -97,6 +100,10 @@ class Product(BaseModel, Model):
     @property
     def is_in_stock(self):
         return self.quantity > 0
+
+    @property
+    def is_new(self):
+        return now() - timedelta(days=7) < self.created_at
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
