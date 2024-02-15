@@ -1,0 +1,87 @@
+{% extends 'apps/base.html' %}
+{% load static %}
+
+{% block title %}
+    Detail page
+{% endblock %}
+
+{% block main_content %}
+
+<div class="card mb-3">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                  <div class="product-slider" id="galleryTop">
+                    <div class="swiper-container theme-slider position-lg-absolute all-0" data-swiper='{"autoHeight":true,"spaceBetween":5,"loop":true,"loopedSlides":5,"thumb":{"spaceBetween":5,"slidesPerView":5,"loop":true,"freeMode":true,"grabCursor":true,"loopedSlides":5,"centeredSlides":true,"slideToClickedSlide":true,"watchSlidesVisibility":true,"watchSlidesProgress":true,"parent":"#galleryTop"},"slideToClickedSlide":true}'>
+                      <div class="swiper-wrapper h-100">
+                          {% for image in product.images.all %}
+                        <div class="swiper-slide h-100"><img class="rounded-1 fit-cover h-100 w-100" src="{{ image.image.url }}" alt="" /></div>
+                            {% endfor %}
+                      </div>
+                      <div class="swiper-nav">
+                        <div class="swiper-button-next swiper-button-white"></div>
+                        <div class="swiper-button-prev swiper-button-white"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <h5>{{ product.name }}</h5><a class="fs--1 mb-2 d-block" href="#!">{{ product.category }}</a>
+                  <div class="fs--2 mb-3 d-inline-block text-decoration-none"></span>
+                  </div>
+                  <p class="fs--1">{{ product.description|safe }}</p>
+                  <h4 class="d-flex align-items-center"><span class="text-warning me-2">{{ product.price }}</span><span class="me-1 fs--1 text-500">
+                      <del class="me-1"></del><strong></strong></span></h4>
+                  <p class="fs--1 mb-1"> <span>Quantity: </span><strong>{{ product.quantity }}</strong></p>
+                  {% if product.is_in_stock %}
+                        <p class="fs--1 mb-1">Stock: <strong class="text-success">Available</strong></p>
+                        {% else %}
+                        <p class="fs--1 mb-1">Stock: <strong class="text-danger">Not available</strong></p>
+                        {% endif %}
+
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <div class="overflow-hidden mt-4">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                      <li class="nav-item"><a class="nav-link px-2 px-md-3" id="specifications-tab" data-bs-toggle="tab" href="#tab-specifications" role="tab" aria-controls="tab-specifications" aria-selected="false">Specifications</a></li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                      <div class="tab-pane fade show active" id="tab-specifications" role="tabpanel" aria-labelledby="specifications-tab">
+                        <table class="table fs--1 mt-3">
+                          <tbody>
+                          {% for key, value in product.specifications.items %}
+                            <tr>
+                              <td class="bg-100" style="width: 30%;">{{ key }}</td>
+                              <td> {{ value }}</td>
+                            </tr>
+                          {% endfor %}
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="tab-pane fade" id="tab-reviews" role="tabpanel" aria-labelledby="reviews-tab">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            <form>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Ism" aria-label="Ism" aria-describedby="basic-addon1">
+                </div>
+
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Telefon nomer" aria-label="Telefon nomer" aria-describedby="basic-addon1">
+                </div>
+
+                <button type="button" class="btn btn-primary">Sotib olish</button>
+            </form>
+
+
+
+            </div>
+          </div>
+    {% include 'apps/parts/footer.html' %}
+{% endblock %}

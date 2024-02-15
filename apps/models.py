@@ -37,7 +37,6 @@ class BaseModel(Model):
         abstract = True
 
 
-# proxymodel
 class User(AbstractUser):
     class Type(TextChoices):
         USERS = 0, 'Users'
@@ -52,7 +51,7 @@ class User(AbstractUser):
         default=Type.USERS,
     )
 
-    image = ImageField(upload_to='users/images/', null=True, blank=True, default='apps/assets/img/logo.png')
+    image = ImageField(upload_to='users/images/', null=True, blank=True, default='users/images/user.jpg')
     phone_regex = RegexValidator(regex=r'^\+998\d{9}$|^\d{9}$',
                                  message="Phone number must be entered in the format: '+999999999'. Up to 25 digits allowed.")
     phone = CharField(max_length=25, unique=True, validators=[phone_regex])
