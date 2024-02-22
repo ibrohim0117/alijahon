@@ -14,6 +14,12 @@ class MainTemplateView(TemplateView):
 class ProfileTemplateView(TemplateView):
     template_name = 'apps/user/profile.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        context['user'] = user
+        return context
+
 
 class SettingsTemplateView(TemplateView):
     template_name = 'apps/user/settings.html'

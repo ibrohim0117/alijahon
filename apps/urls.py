@@ -20,7 +20,7 @@ urlpatterns = [
     path('forget_password', ForgetPasswordTemplateView.as_view(), name='forget_password'),
     path('lockscreen', LockScreenTemplateView.as_view(), name='lockscreen'),
     path('logout', LogoutRedirectView.as_view(), name='logout'),
-    path('reset_password', ResetPasswordTemplateView.as_view(), name='logout'),
+    path('reset_password', ResetPasswordTemplateView.as_view(), name='reset_password'),
 ]
 
 
