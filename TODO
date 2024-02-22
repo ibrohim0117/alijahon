@@ -41,3 +41,5 @@ docker run --name pg_db -e POSTGRES_PASSWORD=1 -p 5433:5432 -v pgdata:/var/lib/p
 
 
 
+isort
+flake8

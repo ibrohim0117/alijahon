@@ -13,6 +13,7 @@ urlpatterns = [
     path('profile/', ProfileTemplateView.as_view(), name='profile'),
     path('settings', SettingsTemplateView.as_view(), name='settings'),
     path('product/<slug:slug>', ProductDetailView.as_view(), name='product_detail'),
+    path('liked/<slug:slug>', ProductDetailView.as_view(), name='product_detail'),
 
     path('register', RegisterCreateView.as_view(), name='register'),
     path('login', LoginFormView.as_view(), name='login'),

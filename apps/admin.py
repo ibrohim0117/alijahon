@@ -13,6 +13,7 @@ class ProductImageInline(admin.StackedInline):
 @admin.register(Product)
 class ProductModelAdmin(admin.ModelAdmin):
     inlines = [ProductImageInline]
+    exclude = ('slug',)
     search_fields = ('name', 'description', 'price')
     list_display = ('name', 'description', 'price', 'quantity', 'specifications', 'is_in_stock')
 

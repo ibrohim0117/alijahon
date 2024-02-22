@@ -1,5 +1,5 @@
+import uuid
 from datetime import datetime, timedelta
-
 from ckeditor.fields import RichTextField
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
@@ -45,12 +45,7 @@ class User(AbstractUser):
         MANAGER = 3, 'Managers'
         OPERATOR = 4, 'Operators'
 
-    type_choice = CharField(
-        max_length=20,
-        choices=Type.choices,
-        default=Type.USERS,
-    )
-
+    type = CharField(max_length=20, choices=Type.choices, default=Type.USERS)
     image = ImageField(upload_to='users/images/', null=True, blank=True, default='users/images/user.jpg')
     phone_regex = RegexValidator(regex=r'^\+998\d{9}$|^\d{9}$',
                                  message="Phone number must be entered in the format: '+999999999'. Up to 25 digits allowed.")
@@ -106,10 +101,12 @@ class Product(BaseModel, Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
+        if Product.objects.filter(slug=self.slug).exists():
+            self.slug += uuid.uuid4.__str__().split('-')[-1]
         super().save(*args, **kwargs)
 
 
-class ProductImage(BaseModel, Model):
+class ProductImage(BaseModel):
     product = ForeignKey(Product, CASCADE, related_name='images')
     image = ResizedImageField(upload_to='products/images/', size=[1000, 800], crop=['middle', 'center'])
 
