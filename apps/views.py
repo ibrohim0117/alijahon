@@ -2,8 +2,8 @@ from django.contrib.auth import login, logout
 from django.shortcuts import redirect
 from django.views import View
 from django.views.generic import TemplateView, CreateView, FormView, ListView, DetailView
-from apps.forms import UserRegisterForm, UserLoginForm
-from apps.models import User, Product
+from apps.forms import UserRegisterForm, UserLoginForm, WishlistForm
+from apps.models import User, Product, Wishlist
 from apps.tasks import task_send_mail
 
 
@@ -38,6 +38,26 @@ class ProductDetailView(DetailView):
     model = Product
     context_object_name = 'product'
     slug_url_kwarg = 'slug'
+
+
+class WishlistCreateView(View):
+    def get(self, *args, **kwargs):
+        user = self.request.user
+        slug = self.kwargs.get('slug')
+        product = Product.objects.filter(slug=slug).first()
+        if user and slug:
+            if not Wishlist.objects.filter(product=product).exists():
+                Wishlist.objects.create(
+                    user=user,
+                    product=product
+                )
+            else:
+                wishlist = Wishlist.objects.filter(product=product).first()
+                wishlist.delete()
+
+        return redirect('/')
+
+
 
 
 class RegisterCreateView(CreateView):
@@ -88,7 +108,7 @@ class LogoutRedirectView(View):
     # next_page = reverse_lazy('login')
     def get(self, *args, **kwargs):
         logout(self.request)
-        return redirect('login')
+        return redirect('/')
 
 
 class ResetPasswordTemplateView(TemplateView):

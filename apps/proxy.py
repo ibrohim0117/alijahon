@@ -5,27 +5,27 @@ from apps.models import User
 
 class UserManager(Manager):
     def get_queryset(self):
-        return super(UserManager, self).get_queryset().filter(type_choice=User.Type.USERS)
+        return super(UserManager, self).get_queryset().filter(type=User.Type.USERS)
 
 
 class AdminManager(Manager):
     def get_queryset(self):
-        return super(AdminManager, self).get_queryset().filter(type_choice=User.Type.ADMIN)
+        return super(AdminManager, self).get_queryset().filter(type=User.Type.ADMIN)
 
 
 class CouriersManager(Manager):
     def get_queryset(self):
-        return super(CouriersManager, self).get_queryset().filter(type_choice=User.Type.COURIER)
+        return super(CouriersManager, self).get_queryset().filter(type=User.Type.COURIER)
 
 
 class ManagerProxy(Manager):
     def get_queryset(self):
-        return super(ManagerProxy, self).get_queryset().filter(type_choice=User.Type.MANAGER)
+        return super(ManagerProxy, self).get_queryset().filter(type=User.Type.MANAGER)
 
 
 class OperatorManager(Manager):
     def get_queryset(self):
-        return super(OperatorManager, self).get_queryset().filter(type_choice=User.Type.OPERATOR)
+        return super(OperatorManager, self).get_queryset().filter(type=User.Type.OPERATOR)
 
 
 class UserProxy(User):
