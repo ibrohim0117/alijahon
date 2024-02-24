@@ -98,7 +98,7 @@
                                         title="Add to Wish List"><span
                                         class="far fa-heart" style="color:red"></span></a>
                                 {% else %}
-                                    <a class="btn btn-sm btn-falcon-default me-2" href="#!"
+                                    <a class="btn btn-sm btn-falcon-default me-2" href="{% url 'wishlist' product.slug %}"
                                         data-bs-toggle="tooltip" data-bs-placement="top"
                                         title="Add to Wish List"><span
                                         class="far fa-heart" ></span></a>

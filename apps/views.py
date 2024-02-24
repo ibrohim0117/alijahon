@@ -1,7 +1,9 @@
 from django.contrib.auth import login, logout
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.views import View
 from django.views.generic import TemplateView, CreateView, FormView, ListView, DetailView
+from requests import request
+
 from apps.forms import UserRegisterForm, UserLoginForm, WishlistForm
 from apps.models import User, Product, Wishlist
 from apps.tasks import task_send_mail
@@ -51,13 +53,21 @@ class WishlistCreateView(View):
                     user=user,
                     product=product
                 )
+                # context = {
+                #     'like': True
+                # }
+                # print(context)
+                # return render(request, 'apps/product/product-grid.html', context)
             else:
                 wishlist = Wishlist.objects.filter(product=product).first()
                 wishlist.delete()
+                # context = {
+                #     'like': False
+                # }
+                # print(context)
+                # return render(request, 'apps/product/product-grid.html', context)
 
         return redirect('/')
-
-
 
 
 class RegisterCreateView(CreateView):
