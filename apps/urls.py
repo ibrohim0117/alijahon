@@ -6,13 +6,14 @@ from apps.views import (MainTemplateView, ProfileTemplateView,
                         LoginFormView, ConfirmMailTemplateView,
                         ForgetPasswordTemplateView, LockScreenTemplateView,
                         LogoutRedirectView, ResetPasswordTemplateView,
-                        WishlistCreateView)
+                        WishlistCreateView, ShoppingListView)
 
 urlpatterns = [
     path('', ProductListView.as_view(), name='products'),
     path('main', MainTemplateView.as_view(), name='main'),
     path('profile/', ProfileTemplateView.as_view(), name='profile'),
     path('settings', SettingsTemplateView.as_view(), name='settings'),
+    path('shop', ShoppingListView.as_view(), name='shop'),
     path('product/<slug:slug>', ProductDetailView.as_view(), name='product_detail'),
     path('liked/<slug:slug>', WishlistCreateView.as_view(), name='wishlist'),
 

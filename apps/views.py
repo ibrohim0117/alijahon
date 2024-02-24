@@ -2,7 +2,7 @@ from django.contrib.auth import login, logout
 from django.shortcuts import redirect, render
 from django.views import View
 from django.views.generic import TemplateView, CreateView, FormView, ListView, DetailView
-from requests import request
+
 
 from apps.forms import UserRegisterForm, UserLoginForm, WishlistForm
 from apps.models import User, Product, Wishlist
@@ -53,20 +53,18 @@ class WishlistCreateView(View):
                     user=user,
                     product=product
                 )
-                # context = {
-                #     'like': True
-                # }
-                # print(context)
-                # return render(request, 'apps/product/product-grid.html', context)
+                context = {
+                    'like': True
+                }
+                print(context)
             else:
                 wishlist = Wishlist.objects.filter(product=product).first()
                 wishlist.delete()
-                # context = {
-                #     'like': False
-                # }
-                # print(context)
-                # return render(request, 'apps/product/product-grid.html', context)
-
+                context = {
+                    'like': False
+                }
+                print(context)
+            return render(self.request, 'apps/product/product-grid.html')
         return redirect('/')
 
 
@@ -123,4 +121,8 @@ class LogoutRedirectView(View):
 
 class ResetPasswordTemplateView(TemplateView):
     template_name = 'apps/auth/reset-password.html'
+
+
+class ShoppingListView(TemplateView):
+    template_name = 'apps/product/shopping-cart.html'
 
