@@ -64,7 +64,7 @@ class WishlistCreateView(View):
                     'like': False
                 }
                 print(context)
-            return render(self.request, 'apps/product/product-grid.html')
+            # return render(self.request, 'apps/product/product-grid.html')
         return redirect('/')
 
 
@@ -123,6 +123,9 @@ class ResetPasswordTemplateView(TemplateView):
     template_name = 'apps/auth/reset-password.html'
 
 
-class ShoppingListView(TemplateView):
+class ShoppingListView(ListView):
     template_name = 'apps/product/shopping-cart.html'
+    queryset = Wishlist.objects.all()
+    context_object_name = 'wishlist'
+    ordering = ('-id',)
 
