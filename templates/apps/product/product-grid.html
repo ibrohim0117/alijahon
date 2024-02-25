@@ -1,6 +1,7 @@
 {% extends 'apps/base.html' %}
 {% load static %}
 {% load custom_tags %}
+{% load is_liked %}
 
 {% block title %}
     Main page
@@ -93,6 +94,7 @@
                                 <div>
 
                                 {% if user.is_authenticated %}
+                                    {{ | }}
                                 <a class="btn btn-sm btn-falcon-default me-2" href="{% url 'wishlist' product.slug %}"
                                         data-bs-toggle="tooltip" data-bs-placement="top"
                                         title="Add to Wish List"><span

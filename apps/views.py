@@ -53,18 +53,9 @@ class WishlistCreateView(View):
                     user=user,
                     product=product
                 )
-                context = {
-                    'like': True
-                }
-                print(context)
             else:
                 wishlist = Wishlist.objects.filter(product=product).first()
                 wishlist.delete()
-                context = {
-                    'like': False
-                }
-                print(context)
-            # return render(self.request, 'apps/product/product-grid.html')
         return redirect('/')
 
 

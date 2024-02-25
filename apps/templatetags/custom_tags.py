@@ -11,7 +11,7 @@ def custom_slice_filter(value, arg: str):
     return list(value)[a: b]
 
 
-@register.filter()
+@register.filter("is_liked", is_safe=True)
 def is_liked(user_id, product_id):
     return Wishlist.objects.filter(user_id=user_id, product_id=product_id).exists()
 
