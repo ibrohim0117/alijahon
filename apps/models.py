@@ -51,6 +51,8 @@ class User(AbstractUser):
                                  message="Phone number must be entered in the format: '+999999999'. Up to 25 digits allowed.")
     phone = CharField(max_length=25, unique=True, validators=[phone_regex])
     email = EmailField(unique=True, null=True, blank=True)
+    address = CharField(max_length=25)
+    about_me = TextField()
 
     objects = CustomUserManager()
 

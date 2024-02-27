@@ -33,6 +33,7 @@ class AdminProxyModel(admin.ModelAdmin):
     search_fields = ('phone', )
 
 
+
 @admin.register(OperatorProxy)
 class OperatorModelAdmin(admin.ModelAdmin):
     search_fields = ('phone', )

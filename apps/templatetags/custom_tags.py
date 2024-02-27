@@ -1,4 +1,5 @@
 from django.template import Library
+from django.template.defaultfilters import stringfilter
 
 from apps.models import Wishlist
 
@@ -11,7 +12,12 @@ def custom_slice_filter(value, arg: str):
     return list(value)[a: b]
 
 
-@register.filter("is_liked", is_safe=True)
+@register.filter()
 def is_liked(user_id, product_id):
     return Wishlist.objects.filter(user_id=user_id, product_id=product_id).exists()
+
+# @register.filter
+# @stringfilter
+# def cut(user_id, product_id):
+#     return Wishlist.objects.filter(user_id=user_id, product_id=product_id).exists()
 
