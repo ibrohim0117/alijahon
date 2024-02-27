@@ -21,10 +21,11 @@ class UserRegisterForm(ModelForm):
             raise forms.ValidationError('Parollar bir xil bo\'lishi kerak')
         return make_password(password)
 
-    # def clean(self):
-    #     cleaned_data = super().clean()
-    #     phone = cleaned_data.get('phone')
-    #     return cleaned_data
+
+class UserUpdateProfileForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'viloyat', 'shahar', 'address', 'about_me']
 
 
 class UserLoginForm(forms.Form):

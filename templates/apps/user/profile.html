@@ -55,35 +55,38 @@
                       <h5 class="mb-0">Sozlamlar</h5>
                     </div>
                     <div class="card-body bg-light">
-                      <form class="row g-3">
+
+                      <form class="row g-3" method="post" action="{% url 'update_profile' user.pk %}">
+                          {% csrf_token %}
                         <div class="col-lg-6">
                           <label class="form-label" for="first-name">Ism</label>
-                          <input class="form-control" id="first-name" type="text" value="Anthony" />
+                          <input class="form-control" name="first_name" id="first-name" type="text" value="{{ user.first_name }}" />
                         </div>
                         <div class="col-lg-6">
                           <label class="form-label" for="last-name">Familya</label>
-                          <input class="form-control" id="last-name" type="text" value="Hopkins" />
+                          <input class="form-control" name="last_name" id="last-name" type="text" value="{{ user.last_name }}" />
                         </div>
                         <div class="col-lg-6">
-                          <label class="form-label" for="email1">Email</label>
-                          <input class="form-control" id="email1" type="text" value="anthony@gmail.com" />
+                          <label class="form-label" for="email1">Viloyat</label>
+                          <input class="form-control" name="viloyat" id="email1" type="text" value="{{ user.viloyat }}" />
                         </div>
                         <div class="col-lg-6">
-                          <label class="form-label" for="email2">Telefon raqam</label>
-                          <input class="form-control" id="email2" type="text" value="+44098098304" />
+                          <label class="form-label" for="email2">Shaxar/Tuman</label>
+                          <input class="form-control" name="shahar" id="email2" type="text" value="{{ user.shahar }}" />
                         </div>
                         <div class="col-lg-12">
                           <label class="form-label" for="email3">Manzil</label>
-                          <input class="form-control" id="email3" type="text" value="Software Engineer" />
+                          <input class="form-control" name="address" id="email3" type="text" value="{{ user.address }}" />
                         </div>
                         <div class="col-lg-12">
                           <label class="form-label" for="intro">Siz haqingizda</label>
-                          <textarea class="form-control" id="intro" name="intro" cols="30" rows="13">Dedicated, passionate, and accomplished Full Stack Developer with 9+ years of progressive experience working as an Independent Contractor for Google and developing and growing my educational social network that helps others learn programming, web design, game development, networking. I’ve acquired a wide depth of knowledge and expertise in using my technical skills in programming, computer science, software development, and mobile app development to developing solutions to help organizations increase productivity, and accelerate business performance. It’s great that we live in an age where we can share so much with technology but I’m but I’m ready for the next phase of my career, with a healthy balance between the virtual world and a workplace where I help others face-to-face. There’s always something new to learn, especially in IT-related fields. People like working with me because I can explain technology to everyone, from staff to executives who need me to tie together the details and the big picture. I can also implement the technologies that successful projects need.</textarea>
+                          <textarea class="form-control" name="about_me" id="intro" name="intro" cols="30" rows="13">{{ user.about_me }}</textarea>
                         </div>
                         <div class="col-12 d-flex justify-content-end">
                           <button class="btn btn-primary" type="submit">Update </button>
                         </div>
                       </form>
+
                     </div>
                   </div>
                 </div>

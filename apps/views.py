@@ -1,10 +1,9 @@
 from django.contrib.auth import login, logout
 from django.shortcuts import redirect, render
 from django.views import View
-from django.views.generic import TemplateView, CreateView, FormView, ListView, DetailView
+from django.views.generic import TemplateView, CreateView, FormView, ListView, DetailView, UpdateView
 
-
-from apps.forms import UserRegisterForm, UserLoginForm, WishlistForm
+from apps.forms import UserRegisterForm, UserLoginForm, WishlistForm, UserUpdateProfileForm
 from apps.models import User, Product, Wishlist
 from apps.tasks import task_send_mail
 
@@ -85,6 +84,13 @@ class LoginFormView(FormView):
             login(self.request, user)
             return redirect('/')
         return super().form_valid(form)
+
+
+class UpdateViewProfile(UpdateView):
+    model = User
+    form_class = UserUpdateProfileForm
+    template_name = 'apps/user/profile.html'
+    success_url = '/'
 
 
 class ConfirmMailTemplateView(TemplateView):

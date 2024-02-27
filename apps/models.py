@@ -51,7 +51,9 @@ class User(AbstractUser):
                                  message="Phone number must be entered in the format: '+999999999'. Up to 25 digits allowed.")
     phone = CharField(max_length=25, unique=True, validators=[phone_regex])
     email = EmailField(unique=True, null=True, blank=True)
-    address = CharField(max_length=25)
+    viloyat = CharField(max_length=25, blank=True, null=True)
+    shahar = CharField(max_length=25, blank=True, null=True)
+    address = CharField(max_length=25, blank=True, null=True)
     about_me = TextField()
 
     objects = CustomUserManager()
@@ -66,7 +68,7 @@ class User(AbstractUser):
         verbose_name_plural = 'Foydalanuvchilar'
 
 
-class Category(BaseModel, Model):
+class Category(BaseModel):
     name = CharField(max_length=25)
 
     class Meta:
@@ -77,7 +79,7 @@ class Category(BaseModel, Model):
         return self.name
 
 
-class Product(BaseModel, Model):
+class Product(BaseModel):
     name = CharField(max_length=255)
     description = RichTextField()
     price = FloatField()
@@ -120,7 +122,7 @@ class ProductImage(BaseModel):
         verbose_name_plural = 'Mahsulotlar rasmlari'
 
 
-class Wishlist(BaseModel, Model):
+class Wishlist(BaseModel):
     user = ForeignKey('apps.User', CASCADE)
     product = ForeignKey('apps.Product', CASCADE)
 
@@ -130,3 +132,7 @@ class Wishlist(BaseModel, Model):
     class Meta:
         verbose_name = 'Buyurtma'
         verbose_name_plural = 'Buyurtmalar'
+
+
+class Order(BaseModel):
+    pass
