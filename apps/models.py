@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime, timedelta
+from datetime import timedelta
 from ckeditor.fields import RichTextField
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
@@ -67,6 +67,9 @@ class User(AbstractUser):
         verbose_name = 'Foydalanuvchi'
         verbose_name_plural = 'Foydalanuvchilar'
 
+    @property
+    def wishlist_summa(self):
+        return sum(self.wishlist_set.values_list('product__price', flat=True))
 
 class Category(BaseModel):
     name = CharField(max_length=25)

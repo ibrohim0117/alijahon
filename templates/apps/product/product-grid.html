@@ -1,8 +1,7 @@
 {% extends 'apps/base.html' %}
 {% load static %}
+{% load humanize %}
 {% load custom_tags %}
-{#{% load is_liked %}#}
-{#{% load cut %}#}
 
 {% block title %}
     Main page
@@ -62,7 +61,7 @@
                                     </h5>
                                     <p class="fs--1 mb-3"><a class="text-500"
                                                              href="#!">{{ product.category.name }}</a></p>
-                                    <h5 class="fs-md-2 text-warning mb-0 d-flex align-items-center mb-3"> {{ product.price }}
+                                    <h5 class="fs-md-2 text-warning mb-0 d-flex align-items-center mb-3"> {{ product.price|intcomma }}
                                         ming so'm
                                         <del class="ms-2 fs--1 text-500"></del>
                                     </h5>
@@ -94,17 +93,11 @@
                                 </div>
                                 <div>
 
-                                {% if user.is_authenticated %}
-                                <a class="btn btn-sm btn-falcon-default me-2" href="{% url 'wishlist' product.slug %}"
-                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                        title="Add to Wish List"><span
-                                        class="far fa-heart" style="color:red"></span></a>
-                                {% else %}
                                     <a class="btn btn-sm btn-falcon-default me-2" href="{% url 'wishlist' product.slug %}"
                                         data-bs-toggle="tooltip" data-bs-placement="top"
                                         title="Add to Wish List"><span
-                                        class="far fa-heart" ></span></a>
-                                {% endif %}
+                                        class="far fa-heart" {% if user.id|is_liked:product.id  %}style="color:red"{% endif %}></span>
+                                    </a>
 
                                 </div>
                             </div>

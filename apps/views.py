@@ -1,4 +1,6 @@
 from django.contrib.auth import login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Sum
 from django.shortcuts import redirect, render
 from django.views import View
 from django.views.generic import TemplateView, CreateView, FormView, ListView, DetailView, UpdateView
@@ -41,7 +43,7 @@ class ProductDetailView(DetailView):
     slug_url_kwarg = 'slug'
 
 
-class WishlistCreateView(View):
+class WishlistCreateView(LoginRequiredMixin, View):
     def get(self, *args, **kwargs):
         user = self.request.user
         slug = self.kwargs.get('slug')
@@ -123,6 +125,11 @@ class ResetPasswordTemplateView(TemplateView):
 class ShoppingListView(ListView):
     template_name = 'apps/product/shopping-cart.html'
     queryset = Wishlist.objects.all()
-    context_object_name = 'wishlist'
+    context_object_name = 'wishlists'
     ordering = ('-id',)
+
+    def get_queryset(self):
+        return super().get_queryset().filter(user=self.request.user)
+
+
 

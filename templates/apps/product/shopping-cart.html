@@ -1,5 +1,6 @@
 {% extends 'apps/base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block title %}Shopping page{% endblock title %}
 
@@ -9,9 +10,8 @@
             <div class="card-header">
               <div class="row justify-content-between">
                 <div class="col-md-auto">
-                  <h5 class="mb-3 mb-md-0">Shopping Cart (7 Items)</h5>
+                  <h5 class="mb-3 mb-md-0">Shopping Cart ({{ wishlists.count }} Items)</h5>
                 </div>
-                <div class="col-md-auto"><a class="btn btn-sm btn-outline-secondary border-300 me-2" href="../../app/e-commerce/product/product-list.html"> <span class="fas fa-chevron-left me-1" data-fa-transform="shrink-4"></span>Continue Shopping</a><a class="btn btn-sm btn-primary" href="../../app/e-commerce/checkout.html">Checkout</a></div>
               </div>
             </div>
             <div class="card-body p-0">
@@ -20,14 +20,14 @@
                 <div class="col-9 col-md-8 py-2">Name</div>
                 <div class="col-3 col-md-4">
                   <div class="row">
-                    <div class="col-md-8 py-2 d-none d-md-block text-center">Quantity</div>
+                    <div class="col-md-8 py-2 d-none d-md-block text-center"></div>
                     <div class="col-12 col-md-4 text-end py-2">Price</div>
                   </div>
                 </div>
               </div>
 
-                {% for i in wishlist %}
-              <div class="row gx-card mx-0 align-items-center border-bottom border-200">
+                {% for i in wishlists %}
+                  <div class="row gx-card mx-0 align-items-center border-bottom border-200">
                 <div class="col-8 py-3">
                   <div class="d-flex align-items-center"><a href="../../app/e-commerce/product/product-details.html"><img class="img-fluid rounded-1 me-3 d-none d-md-block" src="{{ i.product.images.first.image.url }}" alt="" width="60" /></a>
                     <div class="flex-1">
@@ -41,9 +41,6 @@
                     <div class="col-md-8 d-flex justify-content-end justify-content-md-center order-1 order-md-0">
                       <div>
                         <div class="input-group input-group-sm flex-nowrap" data-quantity="data-quantity">
-                          <button class="btn btn-sm btn-outline-secondary border-300 px-2" data-type="minus">-</button>
-                          <input class="form-control text-center px-2 input-spin-none" type="number" min="1" value="1" aria-label="Amount (to the nearest dollar)" style="width: 50px" />
-                          <button class="btn btn-sm btn-outline-secondary border-300 px-2" data-type="plus">+</button>
                         </div>
                       </div>
                     </div>
@@ -57,19 +54,11 @@
                 <div class="col-9 col-md-8 py-2 text-end text-900">Total</div>
                 <div class="col px-0">
                   <div class="row gx-card mx-0">
-                    <div class="col-md-8 py-2 d-none d-md-block text-center">7 (items)</div>
-                    <div class="col-12 col-md-4 text-end py-2">$8516</div>
+                    <div class="col-md-8 py-2 d-none d-md-block text-center">{{ wishlists.count }}</div>
+                    <div class="col-12 col-md-4 text-end py-2">${{ wishlists.first.user.wishlist_summa|intcomma }}</div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="card-footer bg-light d-flex justify-content-end">
-              <form class="me-3">
-                <div class="input-group input-group-sm">
-                  <input class="form-control" type="text" placeholder="Promocode" />
-                  <button class="btn btn-outline-secondary border-300 btn-sm" type="submit">Apply</button>
-                </div>
-              </form><a class="btn btn-sm btn-primary" href="../../app/e-commerce/checkout.html">Checkout</a>
             </div>
           </div>
 
