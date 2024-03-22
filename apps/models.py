@@ -71,6 +71,11 @@ class User(AbstractUser):
     def wishlist_summa(self):
         return sum(self.wishlist_set.values_list('product__price', flat=True))
 
+    @property
+    def wishlist_count(self):
+        return self.wishlist_set.count()
+
+
 class Category(BaseModel):
     name = CharField(max_length=25)
 
