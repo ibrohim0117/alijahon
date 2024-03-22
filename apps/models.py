@@ -51,8 +51,8 @@ class User(AbstractUser):
                                  message="Phone number must be entered in the format: '+999999999'. Up to 25 digits allowed.")
     phone = CharField(max_length=25, unique=True, validators=[phone_regex])
     email = EmailField(unique=True, null=True, blank=True)
-    viloyat = CharField(max_length=25, blank=True, null=True)
-    shahar = CharField(max_length=25, blank=True, null=True)
+    viloyat = CharField(max_length=25, blank=True, null=True)    # noqa
+    shahar = CharField(max_length=25, blank=True, null=True)    # noqa
     address = CharField(max_length=25, blank=True, null=True)
     about_me = TextField()
 
@@ -145,3 +145,7 @@ class Wishlist(BaseModel):
 class Order(BaseModel):
     product_name = CharField(max_length=255)
     quantity = IntegerField(default=0)
+    phone_regex = RegexValidator(regex=r'^\+998\d{9}$|^\d{9}$',
+                                 message="Phone number must be entered in the format: '+999999999'. Up to 25 digits allowed.")
+    phone = CharField(max_length=25, unique=True, validators=[phone_regex])
+    product = ForeignKey('apps.Product', CASCADE)
