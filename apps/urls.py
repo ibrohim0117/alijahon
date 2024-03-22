@@ -7,7 +7,7 @@ from apps.views import (MainTemplateView, ProfileTemplateView,
                         ForgetPasswordTemplateView, LockScreenTemplateView,
                         LogoutRedirectView, ResetPasswordTemplateView,
                         WishlistCreateView, ShoppingListView,
-                        UpdateViewProfile)
+                        UpdateViewProfile, WishlistRemoveView)
 
 urlpatterns = [
     path('', ProductListView.as_view(), name='products'),
@@ -18,6 +18,7 @@ urlpatterns = [
     path('shop', ShoppingListView.as_view(), name='shop'),
     path('product/<slug:slug>', ProductDetailView.as_view(), name='product_detail'),
     path('liked/<slug:slug>', WishlistCreateView.as_view(), name='wishlist'),
+    path('<slug:slug>', WishlistRemoveView.as_view(), name='wishlist_remove'),
 
     path('register', RegisterCreateView.as_view(), name='register'),
     path('login', LoginFormView.as_view(), name='login'),

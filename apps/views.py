@@ -60,6 +60,16 @@ class WishlistCreateView(LoginRequiredMixin, View):
         return redirect('/')
 
 
+class WishlistRemoveView(LoginRequiredMixin, View):
+    def get(self, *args, **kwargs):
+        user = self.request.user
+        slug = self.kwargs.get('slug')
+        product = Product.objects.filter(slug=slug).first()
+        wishlist = Wishlist.objects.filter(product=product).first()
+        wishlist.delete()
+        return redirect('/')
+
+
 class RegisterCreateView(CreateView):
     model = User
     form_class = UserRegisterForm
