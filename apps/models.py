@@ -5,7 +5,7 @@ from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 from django.db.models import ForeignKey, CASCADE, DateTimeField, ImageField, CharField, EmailField, Model, TextField, \
-    PositiveIntegerField, SlugField, TextChoices, FloatField
+    PositiveIntegerField, SlugField, TextChoices, FloatField, IntegerField
 from django.utils.timezone import now
 from django_resized import ResizedImageField
 from jsonfield import JSONField
@@ -143,4 +143,5 @@ class Wishlist(BaseModel):
 
 
 class Order(BaseModel):
-    pass
+    product_name = CharField(max_length=255)
+    quantity = IntegerField(default=0)

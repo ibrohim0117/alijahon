@@ -1,6 +1,5 @@
 from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Sum
 from django.shortcuts import redirect, render
 from django.views import View
 from django.views.generic import TemplateView, CreateView, FormView, ListView, DetailView, UpdateView
@@ -62,7 +61,6 @@ class WishlistCreateView(LoginRequiredMixin, View):
 
 class WishlistRemoveView(LoginRequiredMixin, View):
     def get(self, *args, **kwargs):
-        user = self.request.user
         slug = self.kwargs.get('slug')
         product = Product.objects.filter(slug=slug).first()
         wishlist = Wishlist.objects.filter(product=product).first()
@@ -121,8 +119,6 @@ class LockScreenTemplateView(TemplateView):
 
 
 class LogoutRedirectView(View):
-    # template_name = 'apps/auth/lock-screen.html'
-    # next_page = reverse_lazy('login')
     def get(self, *args, **kwargs):
         logout(self.request)
         return redirect('/')
