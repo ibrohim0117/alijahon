@@ -1,10 +1,8 @@
+from django import forms
 from django.contrib.auth.hashers import make_password
-from django.db import models
 from django.forms import ModelForm
-from django import forms
+
 from apps.models import User, Wishlist
-from apps.utility import validate_phone_number
-from django import forms
 
 
 class UserRegisterForm(ModelForm):

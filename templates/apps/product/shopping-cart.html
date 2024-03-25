@@ -32,7 +32,8 @@
                   <div class="d-flex align-items-center"><a href="../../app/e-commerce/product/product-details.html"><img class="img-fluid rounded-1 me-3 d-none d-md-block" src="{{ i.product.images.first.image.url }}" alt="" width="60" /></a>
                     <div class="flex-1">
                       <h5 class="fs-0"><a class="text-900" href="../../app/e-commerce/product/product-details.html">{{ i.product.name }}</a></h5>
-                      <div class="fs--2 fs-md--1"><a class="text-danger" href="{% url 'wishlist_remove' i.product.slug %}">Remove</a></div>
+                      <div class="fs--2 fs-md--1"><a class="text-danger" href="{% url 'wishlist' i.product.slug %}">Remove</a></div>
+{#                      <div class="fs--2 fs-md--1"><a class="text-danger" href="#">Remove</a></div>#}
                     </div>
                   </div>
                 </div>

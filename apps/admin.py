@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import Group
 
-from apps.models import Product, User, ProductImage, Wishlist, Category
+from apps.models import Product, ProductImage, Wishlist, Category
 from apps.proxy import UserProxy, CouriersProxy, AdminProxy, OperatorProxy, MangerProxyModel
 
 

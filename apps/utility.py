@@ -1,7 +1,4 @@
-import re, requests
-
-from django.db.models import Manager
-
+import re
 
 
 def validate_phone_number(phone_number):
@@ -11,8 +8,6 @@ def validate_phone_number(phone_number):
         return True
     else:
         return False
-
-# print(validate_phone_number('+998995882742'))
 
 
 
