@@ -84,6 +84,15 @@ class Wishlist(BaseModel):
         verbose_name_plural = 'Buyurtmalar'
 
 
+class Region(Model):
+    name = CharField(max_length=30)
+
+
+class District(Model):
+    name = CharField(max_length=30)
+    region = ForeignKey('apps.Region', CASCADE)
+
+
 class Order(BaseModel):
 
     class Status(TextChoices):
@@ -106,19 +115,13 @@ class Order(BaseModel):
     referral_user = ForeignKey('apps.User', CASCADE, 'referral', blank=True, null=True, verbose_name='Referal foydalanuvchi')
     user = ForeignKey('apps.User', CASCADE, 'user', blank=True, null=True, verbose_name='Foydalanuvchi')
     comment = CharField(max_length=255, blank=True, null=True)
-    region = CharField(max_length=25, verbose_name='Viloyat')
-    district = CharField(max_length=25, verbose_name='Tuman')
+    region = ForeignKey('apps.Region', CASCADE, verbose_name='Viloyat')
+    district = ForeignKey('apps.District', CASCADE, verbose_name='Tuman')
     street = CharField(max_length=25, verbose_name='Ko\'cha')
     operator = ForeignKey('apps.User', CASCADE, 'operator', blank=True, null=True, verbose_name='Operator')
 
 
-class Region(Model):
-    name = CharField(max_length=30)
 
-
-class District(Model):
-    name = CharField(max_length=30)
-    region = ForeignKey('apps.Region', CASCADE)
 
 
 
