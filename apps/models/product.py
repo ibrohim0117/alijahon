@@ -110,14 +110,14 @@ class Order(BaseModel):
     phone_regex = RegexValidator(regex=r'^\+998\d{9}$|^\d{9}$',
                                  message="Phone number must be entered  in the format: '+999999999'. Up to 25 digits allowed.")
     phone = CharField(max_length=25, unique=True, validators=[phone_regex])
-    product = ForeignKey('apps.Product', CASCADE, related_name='product')
+    product = ForeignKey('apps.Product', CASCADE, to_field='slug', related_name='product')
     status = CharField(max_length=20, choices=Status.choices, default=Status.NEW)
     referral_user = ForeignKey('apps.User', CASCADE, 'referral', blank=True, null=True, verbose_name='Referal foydalanuvchi')
     user = ForeignKey('apps.User', CASCADE, 'user', blank=True, null=True, verbose_name='Foydalanuvchi')
     comment = CharField(max_length=255, blank=True, null=True)
-    region = ForeignKey('apps.Region', CASCADE, verbose_name='Viloyat')
-    district = ForeignKey('apps.District', CASCADE, verbose_name='Tuman')
-    street = CharField(max_length=25, verbose_name='Ko\'cha')
+    region = ForeignKey('apps.Region', CASCADE, verbose_name='Viloyat', blank=True, null=True)
+    district = ForeignKey('apps.District', CASCADE, verbose_name='Tuman', blank=True, null=True)
+    street = CharField(max_length=25, verbose_name='Ko\'cha', blank=True, null=True)
     operator = ForeignKey('apps.User', CASCADE, 'operator', blank=True, null=True, verbose_name='Operator')
 
 

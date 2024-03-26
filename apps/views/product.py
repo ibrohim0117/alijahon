@@ -1,8 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.views import View
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView, CreateView
 
+from apps.forms import OrderCreateForm
 from apps.models import Product, Wishlist
 
 
@@ -46,3 +47,25 @@ class ShoppingListView(ListView):
 
     def get_queryset(self):
         return super().get_queryset().filter(user=self.request.user)
+
+
+class OrderCreateView(CreateView):
+    form_class = OrderCreateForm
+    template_name = 'apps/product/product-details.html'
+
+    def form_valid(self, form):
+        super().form_valid(form)
+        return redirect('success_product')
+
+    def form_invalid(self, form):
+        super().form_invalid(form)
+        print(form.cleaned_data)
+        return redirect('product_detail', slug='123')
+
+    # def post(self, request, *args, **kwargs):
+    #     super().post(request, *args, **kwargs)
+    #     return redirect('success_product')
+
+
+class OrderSuccessTemplateView(TemplateView):
+    template_name = 'apps/product/order.html'

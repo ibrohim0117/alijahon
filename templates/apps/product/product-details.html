@@ -67,18 +67,22 @@
                 </div>
               </div>
 
-            <form>
+            <form method="post" action="{% url 'order' %}">
+                {% csrf_token %}
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Ism" aria-label="Ism" aria-describedby="basic-addon1">
+                    <input type="text" name="full_name" class="form-control" placeholder="Ism" aria-label="Ism" aria-describedby="basic-addon1">
                 </div>
 
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Telefon nomer" aria-label="Telefon nomer" aria-describedby="basic-addon1">
+                    <input type="text" name="phone" class="form-control" placeholder="Telefon nomer" aria-label="Telefon nomer" aria-describedby="basic-addon1">
                 </div>
 
-                <button type="button" class="btn btn-primary">Sotib olish</button>
+                <div class="input-group mb-3">
+                    <input type="text" name="product"  value="{{ product.slug }}" hidden class="form-control" aria-label="Telefon nomer" aria-describedby="basic-addon1">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Sotib olish</button>
             </form>
-
 
 
             </div>

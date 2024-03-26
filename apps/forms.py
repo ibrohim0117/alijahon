@@ -1,8 +1,11 @@
 from django import forms
 from django.contrib.auth.hashers import make_password
 from django.forms import ModelForm
+from django.shortcuts import get_object_or_404
 
-from apps.models import User, Wishlist
+from apps.models import Product
+from apps.models.user import User
+from apps.models.product import Order, Wishlist
 
 
 class UserRegisterForm(ModelForm):
@@ -35,6 +38,17 @@ class WishlistForm(forms.ModelForm):
     class Meta:
         model = Wishlist
         fields = ['user', 'product']
+
+
+class OrderCreateForm(ModelForm):
+    class Meta:
+        model = Order
+        fields = ['full_name', 'phone', 'product']
+
+    def validate_product(self):
+        slug = self.cleaned_data.get('product')
+        product = get_object_or_404(Product.objects.all(), slug=slug)
+        return product.id
 
 
 
