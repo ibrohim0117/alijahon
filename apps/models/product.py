@@ -101,7 +101,7 @@ class Order(BaseModel):
     phone_regex = RegexValidator(regex=r'^\+998\d{9}$|^\d{9}$',
                                  message="Phone number must be entered  in the format: '+999999999'. Up to 25 digits allowed.")
     phone = CharField(max_length=25, unique=True, validators=[phone_regex])
-    product = ForeignKey('apps.Product', CASCADE)
+    product = ForeignKey('apps.Product', CASCADE, related_name='product')
     status = CharField(max_length=20, choices=Status.choices, default=Status.NEW)
     referral_user = ForeignKey('apps.User', CASCADE, 'referral', blank=True, null=True, verbose_name='Referal foydalanuvchi')
     user = ForeignKey('apps.User', CASCADE, 'user', blank=True, null=True, verbose_name='Foydalanuvchi')
@@ -110,6 +110,15 @@ class Order(BaseModel):
     district = CharField(max_length=25, verbose_name='Tuman')
     street = CharField(max_length=25, verbose_name='Ko\'cha')
     operator = ForeignKey('apps.User', CASCADE, 'operator', blank=True, null=True, verbose_name='Operator')
+
+
+class Region(Model):
+    name = CharField(max_length=30)
+
+
+class District(Model):
+    name = CharField(max_length=30)
+    region = ForeignKey('apps.Region', CASCADE)
 
 
 
