@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+{% for order in orders %}
+
+    <div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h1 class="card-title">{{ order.product.name }}</h1>
+    <h3 class="card-subtitle mb-2 text-muted">{{ order.product.price }}</h3>
+    <h3 class="card-subtitle mb-2 text-muted">Mijoz: {{ order.phone }} Ismi: {{ order.full_name }}</h3>
+    <h3 class="card-subtitle mb-2 text-muted">Vaqt: {{ order.created_at }}</h3>
+    <a href="#" class="card-link">Card link</a>
+    <a href="#" class="card-link">Another link</a>
+  </div>
+
+    <br>
+    <br>
+    <br>
+
+{% endfor %}
+</div>
+</body>
+</html>

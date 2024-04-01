@@ -8,6 +8,7 @@ from apps.views import (MainTemplateView, ProfileTemplateView,
                         LogoutRedirectView, ResetPasswordTemplateView,
                         WishlistCreateView, ShoppingListView,
                         UpdateViewProfile, OrderSuccessTemplateView, OrderCreateView)
+from apps.views.product import OrderListView
 
 urlpatterns = [
     path('', ProductListView.as_view(), name='products'),
@@ -20,6 +21,7 @@ urlpatterns = [
     path('liked/<slug:slug>', WishlistCreateView.as_view(), name='wishlist'),
     path('success-product/<int:pk>', OrderSuccessTemplateView.as_view(), name='success_product'),
     path('order', OrderCreateView.as_view(), name='order'),
+    path('order-list', OrderListView.as_view(), name='order_list'),
 
     path('register', RegisterCreateView.as_view(), name='register'),
     path('login', LoginFormView.as_view(), name='login'),

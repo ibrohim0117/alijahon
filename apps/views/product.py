@@ -78,4 +78,16 @@ class OrderSuccessTemplateView(TemplateView):
         return context
 
 
+class OrderListView(ListView):
+    queryset = Order.objects.all()
+    template_name = 'apps/product/order_list.html'
+    context_object_name = 'orders'
+    ordering = ('-id', )
+
+    def get_queryset(self):
+        return super().get_queryset().filter(status=Order.Status.NEW)
+
+
+
+
 
