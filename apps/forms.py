@@ -45,10 +45,4 @@ class OrderCreateForm(ModelForm):
         model = Order
         fields = ['full_name', 'phone', 'product']
 
-    def validate_product(self):
-        slug = self.cleaned_data.get('product')
-        product = get_object_or_404(Product.objects.all(), slug=slug)
-        return product.id
-
-
 

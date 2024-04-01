@@ -18,7 +18,7 @@ urlpatterns = [
     path('shop', ShoppingListView.as_view(), name='shop'),
     path('product/<slug:slug>', ProductDetailView.as_view(), name='product_detail'),
     path('liked/<slug:slug>', WishlistCreateView.as_view(), name='wishlist'),
-    path('success-product', OrderSuccessTemplateView.as_view(), name='success_product'),
+    path('success-product/<int:pk>', OrderSuccessTemplateView.as_view(), name='success_product'),
     path('order', OrderCreateView.as_view(), name='order'),
 
     path('register', RegisterCreateView.as_view(), name='register'),

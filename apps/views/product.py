@@ -1,10 +1,12 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
+from django.urls import reverse
 from django.views import View
 from django.views.generic import ListView, DetailView, TemplateView, CreateView
 
 from apps.forms import OrderCreateForm
 from apps.models import Product, Wishlist
+from apps.models.product import Order
 
 
 class ProductListView(ListView):
@@ -50,22 +52,30 @@ class ShoppingListView(ListView):
 
 
 class OrderCreateView(CreateView):
+    model = Order
     form_class = OrderCreateForm
     template_name = 'apps/product/product-details.html'
 
-    def form_valid(self, form):
-        super().form_valid(form)
-        return redirect('success_product')
-
     def form_invalid(self, form):
         super().form_invalid(form)
-        print(form.cleaned_data)
-        return redirect('product_detail', slug='123')
+        slug = form.cleaned_data['product'].slug
+        return redirect('product_detail', slug=slug)
 
-    # def post(self, request, *args, **kwargs):
-    #     super().post(request, *args, **kwargs)
-    #     return redirect('success_product')
+    def form_valid(self, form):
+        data = form.save()
+        return redirect('success_product', data.id)
 
 
 class OrderSuccessTemplateView(TemplateView):
     template_name = 'apps/product/order.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        obj: Order = get_object_or_404(Order.objects.all(), id=kwargs.get('pk'))
+        # order = Order.objects.filter(id=kwargs.get('pk'))
+        context['product'] = obj.product
+        # print(obj.product.name)
+        return context
+
+
+
