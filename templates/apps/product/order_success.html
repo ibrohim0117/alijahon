@@ -11,7 +11,7 @@
 
     </div>
 
-    <img style="height: 100px; width:100px; margin-left:45%; margin-top: 30px" src="/static/app/success_icon.png" alt="Green Success Image">
+    <img style="height: 100px; width:100px; margin-left:45%; margin-top: 30px" src="/apps/static/apps/assets/success.png" alt="Green Success Image">
     <h3 class="mt-4">Arizangiz qabul qilindi!</h3>
     <p>Batafsil ma'lumot uchun operator yaqin vaqt ichida siz bilan aloqaga chiqadi.</p>
     <p>Iltimos, telefoningiz yoqilgan holda bo'lsin!</p>
@@ -25,8 +25,8 @@
         </thead>
         <tbody>
             <tr>
-                <th scope="col">Smart Watch va Airpods</th>
-                <th scope="col">209000</th>
+                <th scope="col">{{ product.name }}</th>
+                <th scope="col">{{ product.price }}</th>
                 <th scope="col">1</th>
             </tr>
 
@@ -40,7 +40,7 @@
     <div class="row">
         <div class="col-md-6">
             <h5>Jami</h5>
-            <h5>239000 so'm</h5>
+            <h5>{{ product.price }} so'm</h5>
         </div>
         <div class="col-md-6 mt-3">
             <a href="/" class="btn btn-primary w-50">Boshqa mahsulotlar</a>

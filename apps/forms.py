@@ -46,3 +46,9 @@ class OrderCreateForm(ModelForm):
         fields = ['full_name', 'phone', 'product']
 
 
+class UpdateOrderForms(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ['operator']
+
+

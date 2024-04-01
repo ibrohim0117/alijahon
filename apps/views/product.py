@@ -2,9 +2,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse
 from django.views import View
-from django.views.generic import ListView, DetailView, TemplateView, CreateView
+from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView
 
-from apps.forms import OrderCreateForm
+from apps.forms import OrderCreateForm, UpdateOrderForms
 from apps.models import Product, Wishlist
 from apps.models.product import Order
 
@@ -67,7 +67,7 @@ class OrderCreateView(CreateView):
 
 
 class OrderSuccessTemplateView(TemplateView):
-    template_name = 'apps/product/order.html'
+    template_name = 'apps/product/order_success.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -86,6 +86,19 @@ class OrderListView(ListView):
 
     def get_queryset(self):
         return super().get_queryset().filter(status=Order.Status.NEW)
+
+
+class OrderUpdateView(UpdateView):
+    model = Order
+    form_class = UpdateOrderForms
+    template_name = 'apps/product/order_update.html'
+    success_url = 'order_list'
+
+
+# class OrderDetailView(DetailView):
+#     template_name = 'apps/product/order_update.html'
+#     model = Order
+#     context_object_name = 'order'
 
 
 
