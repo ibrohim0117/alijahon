@@ -120,7 +120,8 @@ class Order(BaseModel):
     street = CharField(max_length=25, verbose_name='Ko\'cha', blank=True, null=True)
     operator = ForeignKey('apps.User', CASCADE, 'operator', blank=True, null=True, verbose_name='Operator')
 
-
+    class Meta:
+        ordering = ['-id']
 
 
 

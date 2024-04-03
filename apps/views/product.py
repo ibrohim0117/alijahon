@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.views import View
 from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView
 
-from apps.forms import OrderCreateForm, UpdateOrderForms
+from apps.forms import OrderCreateForm, OrderUpdateModelForm
 from apps.models import Product, Wishlist
 from apps.models.product import Order
 
@@ -79,21 +79,27 @@ class OrderSuccessTemplateView(TemplateView):
 
 
 class OrderListView(ListView):
-    queryset = Order.objects.all()
+    queryset = Order.objects.filter(status=Order.Status.NEW)
     template_name = 'apps/product/order_list.html'
     context_object_name = 'orders'
-    ordering = ('-id', )
 
-    def get_queryset(self):
-        return super().get_queryset().filter(status=Order.Status.NEW)
+    def get_object(self, queryset=None):
+        order_id = self.request.POST.get('order_id')
+        return get_object_or_404(Order.objects.all(), pk=order_id)
+
+    def post(self, request, *args, **kwargs):
+        order = self.get_object()
+        order.operator = request.user
+        order.save()
+        return redirect('order_update', order.pk)
 
 
 class OrderUpdateView(UpdateView):
     model = Order
-    form_class = UpdateOrderForms
+    form_class = OrderUpdateModelForm
+    # fields = ['quantity', 'region', 'district', 'status', 'comment']
     template_name = 'apps/product/order_update.html'
     success_url = 'order_list'
-
 
 # class OrderDetailView(DetailView):
 #     template_name = 'apps/product/order_update.html'

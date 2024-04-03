@@ -24,7 +24,7 @@ urlpatterns = [
     path('success-product/<int:pk>', OrderSuccessTemplateView.as_view(), name='success_product'),
     path('order', OrderCreateView.as_view(), name='order'),
     path('order-list', OrderListView.as_view(), name='order_list'),
-    path('order/<int:pk>/', OrderUpdateView.as_view(    ), name='order_update'),
+    path('order/<int:pk>/', OrderUpdateView.as_view(), name='order_update'),
 
     path('register', RegisterCreateView.as_view(), name='register'),
     path('login', LoginFormView.as_view(), name='login'),

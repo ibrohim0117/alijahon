@@ -1299,16 +1299,19 @@
                         <li class="">Yangilangan vaqti: {{ order.update_at }}</li>
                         <li class="">Holati: {{ order.status }}</li>
                     </ul>
-                    <a href="{% url 'order_update' order.pk %}" class="btn btn-primary" style="float: left; margin-right: 10px;">
 
-                            Qabul qilish
+                    <form action="{% url 'order_list' %}" method="post">
+                        {% csrf_token %}
+                        <input type="text" hidden name="order_id" value={{ order.pk }}>
+                        <input class="btn btn-primary" type="submit" value="Qabul qilish" style="float: right; margin-right: 10px;">
+                    </form>
 
-                    </a>
-                    <form action="{% url 'order_update' order.pk %}" method="post">
+                <form action="{% url 'order_update' order.pk %}" method="post">
                         {% csrf_token %}
                         <input type="text" hidden name="operator" value={{ request.user }}>
                         <input class="btn btn-primary" type="submit" value="Hold" style="float: right; margin-right: 10px;">
                     </form>
+
                 </div>
                 {% endfor %}
             </div>
