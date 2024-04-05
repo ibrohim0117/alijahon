@@ -78,7 +78,7 @@ class OrderSuccessTemplateView(TemplateView):
         return context
 
 
-class OrderListView(ListView):
+class OrderListView(LoginRequiredMixin, ListView):
     queryset = Order.objects.filter(status=Order.Status.NEW)
     template_name = 'apps/product/order_list.html'
     context_object_name = 'orders'
@@ -94,12 +94,17 @@ class OrderListView(ListView):
         return redirect('order_update', order.pk)
 
 
-class OrderUpdateView(UpdateView):
+class OrderUpdateView(LoginRequiredMixin, UpdateView):
     model = Order
     form_class = OrderUpdateModelForm
-    # fields = ['quantity', 'region', 'district', 'status', 'comment']
     template_name = 'apps/product/order_update.html'
     success_url = 'order_list'
+
+    def get_context_data(self, **kwargs):
+        contex = super().get_context_data(**kwargs)
+        order = Order.objects.filter(id=self.kwargs.get('pk')).first()
+        contex['order'] = order
+        return contex
 
 # class OrderDetailView(DetailView):
 #     template_name = 'apps/product/order_update.html'
