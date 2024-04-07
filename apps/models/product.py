@@ -2,12 +2,15 @@ import uuid
 from datetime import timedelta
 from ckeditor.fields import RichTextField
 from django.core.validators import RegexValidator
-from django.db.models import ForeignKey, CASCADE, DateTimeField, CharField, Model, \
-    PositiveIntegerField, SlugField, FloatField, IntegerField, TextChoices
 from django.utils.timezone import now
 from django_resized import ResizedImageField
 from jsonfield import JSONField
 from django.utils.text import slugify
+from django.db.models import (
+    ForeignKey, CASCADE, DateTimeField,
+    CharField, Model, PositiveIntegerField,
+    SlugField, FloatField, IntegerField, TextChoices
+)
 
 
 class BaseModel(Model):
