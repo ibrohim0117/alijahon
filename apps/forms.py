@@ -49,6 +49,6 @@ class OrderCreateForm(ModelForm):
 class OrderUpdateModelForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ['quantity', 'region', 'district', 'status', 'comment']
+        fields = ['quantity', 'region', 'status', 'comment']
 
 

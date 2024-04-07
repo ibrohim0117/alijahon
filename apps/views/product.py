@@ -6,7 +6,7 @@ from django.views.generic import ListView, DetailView, TemplateView, CreateView,
 
 from apps.forms import OrderCreateForm, OrderUpdateModelForm
 from apps.models import Product, Wishlist
-from apps.models.product import Order
+from apps.models.product import Order, Region
 
 
 class ProductListView(ListView):
@@ -103,13 +103,21 @@ class OrderUpdateView(LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         contex = super().get_context_data(**kwargs)
         order = Order.objects.filter(id=self.kwargs.get('pk')).first()
+        regions = Region.objects.all()
         contex['order'] = order
+        contex['regions'] = regions
         return contex
 
-# class OrderDetailView(DetailView):
-#     template_name = 'apps/product/order_update.html'
-#     model = Order
-#     context_object_name = 'order'
+    def form_valid(self, form):
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        return super().form_invalid(form)
+
+
+
+
+
 
 
 

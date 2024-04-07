@@ -15,13 +15,13 @@
 
     <div class="row">
         <h1>Hammasi to'g'ri kiritilganligiga e'tibor bering!</h1>
-        <p>Customer: <span>998935248052 - 998999999999</span></p>
-        <p>Genger sovun - 445000 so'm</p>  <p style="color: red; display: inline;">AKSIYA</p> 
+        <p>Customer: <span>{{ order.full_name }} - {{ order.phone }}</span></p>
+        <p>{{ order.product.name }} - {{ order.product.price }} so'm</p>  <p style="color: red; display: inline;">AKSIYA</p> 
         <p>Dostavka narxi: Bepul</p>
     </div>
     
-        <form method="post">
-            <input type="hidden" name="csrfmiddlewaretoken" value="J1bs3BFsKHtg8R7l2YL1lUJEi6opaRHebFyKSuQOecVcvw0iafRAI0XyjUgs96Eq">
+        <form method="post" action="{% url 'order_update' order.pk %}">
+        {% csrf_token %}
             <div class="row">
                 <div class="col-6">
                     <p>Nechta:</p>
@@ -72,40 +72,14 @@
             <div class="row">
                 <div class="mb-3 col-12">
                     <label for="location">Viloyat:</label>
-                    <select class="form-control" id="location" name="location">
+                    <select class="form-control" id="location" name="region">
                         <!-- <option value="None" selected>Viloyatni tanlang</option> -->
                         
-                            <option  value="Viloyatni tanlang">Viloyatni tanlang</option>
+                            <option  value="region">Viloyatni tanlang</option>
+                        {% for region in regions %}
                         
-                            <option  value="tashkent">Toshkent shahar</option>
-                        
-                            <option  value="andijon">Andijon viloyati</option>
-                        
-                            <option  value="buxoro">Buxoro viloyati</option>
-                        
-                            <option  value="fargona">Fargʻona viloyati</option>
-                        
-                            <option  value="jizzax">Jizzax viloyati</option>
-                        
-                            <option 
-                                 value="namangan">Namangan viloyati</option>
-                        
-                            <option  value="navoiy">Navoiy viloyati</option>
-                        
-                            <option  value="qashqadaryo">Qashqadaryo viloyati</option>
-                        
-                            <option  value="qoraqalpogiston">Qoraqalpogʻiston Respublika</option>
-                        
-                            <option  value="samarqand">Samarqand viloyati</option>
-                        
-                            <option  value="sirdaryo">Sirdaryo viloyati</option>
-                        
-                            <option  value="surxondaryo">Surxondaryo viloyati</option>
-                        
-                            <option  value="toshkent">Toshkent viloyati</option>
-                        
-                            <option  value="xorazm">Xorazm viloyati</option>
-                        
+                            <option  value="{{ region.pk }}">{{ region.name }}</option>
+                        {% endfor %}
                     </select>
                 </div>
             </div>
@@ -113,7 +87,7 @@
                 <div class="mb-3 col-12">
                     <p>Manzil: </p>
                     <label for="exampleFormControlInput1" class="form-label w-50">
-                        <select class="form-control" name="address" id="region">
+                        <select class="form-control" name="region" id="region">
                             <option value="None">Tanlang</option>
                         </select>
                     </label>
@@ -137,58 +111,68 @@
             </div>
 
             <div class="row">
+                
                 <div class="form-check">
                     <input  required class="sr-only form-check-input" type="radio" name="status"
                         id="new_order"
-                        value="yangi">
+                        value="{{ order.status.NEW }}">
                     <label class="form-check-label" for="new_order">
                         Yangi buyurtma
                     </label>
                     <p>Hali bog'lanilmagan qurilma</p>
                 </div>
+                
+                
                 <div class="form-check">
                     <input 
                         checked="checked"  required class="form-check-input sr-only" type="radio" name="status" id="ready_to_deliver"
-                        value="dastavkaga_tayyor">
+                        value="{{ order.status.READY_TO_DELIVERY }}">
                     <label class="form-check-label" for="ready_to_deliver">
                         Dastavkaga tayyor
                     </label>
                     <p class="bg-primary">Klient buyurtma olishga tayyor yoki buyurtma olish uchun sana aniq qilindi</p>
                 </div>
+                
+                
                 <div class="form-check">
                     <input  required class="form-check-input sr-only" type="radio" name="status" id="waiting"
-                        value="keyin_oladi">
+                        value="{{ order.status.WAITING }}">
                     <label class="form-check-label" for="waiting">
                         Keyin oladi
                     </label>
                     <p class="bg-warning">2 marta ko'tarmadi, o'chirilgan, xizmat doirasida tashqarida</p>
                 </div>
+                
+                
                 <div class="form-check">
                     <input  required class="form-check-input sr-only" type="radio" name="status"
                         id="broken"
-                        value="nosoz_mahsulot">
+                        value="{{ order.status.BROKEN }}">
                     <label class="form-check-label" for="broken">
                         Nosoz, bekor qilindi
                     </label>
                     <p class="bg-danger">Klient tomonidan shikoyat tushdi</p>
                 </div>
+                
+                
                 <div class="form-check">
                     <input  required class="form-check-input sr-only" type="radio" name="status"
                         id="archive"
-                        value="arxivlandi">
+                        value="{{ order.status.ARCHIVE }}">
                     <label class="form-check-label" for="archive">
                         Arxivlandi
                     </label>
                     <p class="bg-secondary">Noto'g'ri nomer, dubl buyurtma, Bekor qilindi, Olib bo'lgan</p>
                 </div>
+                
             </div>
             <div class="form-group">
                 <label for="exampleFormControlTextarea1">Komment</label>
-                <textarea name="comment" class="form-control" id="exampleFormControlTextarea1"
+                <textarea name="commenmt" class="form-control" id="exampleFormControlTextarea1"
                           rows="3">5ta olmoqchi</textarea>
             </div>
             <div style="display: flex; justify-content: flex-end;">
-                <a href="/operator/new" type="button" class="btn m-3 btn-secondary">Chiqish</a>
+{#                <a href="/operator/new" type="button" class="btn m-3 btn-secondary">Chiqish</a>#}
                 <input type="submit" class="btn m-3 btn-primary" value="Yuborish"/>
             </div>
         </form>
