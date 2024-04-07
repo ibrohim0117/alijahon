@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.models import Group
 
 from apps.models import Product, ProductImage, Wishlist, Category
+from apps.models.product import Order
 from apps.proxy import UserProxy, CouriersProxy, AdminProxy, OperatorProxy, MangerProxyModel
 
 
@@ -33,7 +34,6 @@ class AdminProxyModel(admin.ModelAdmin):
     search_fields = ('phone', )
 
 
-
 @admin.register(OperatorProxy)
 class OperatorModelAdmin(admin.ModelAdmin):
     search_fields = ('phone', )
@@ -44,6 +44,6 @@ class ManagerModelAdmin(admin.ModelAdmin):
     search_fields = ('phone', )
 
 
-admin.site.register(Wishlist)
+admin.site.register(Order)
 admin.site.register(Category)
 admin.site.unregister(Group)

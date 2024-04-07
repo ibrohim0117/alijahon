@@ -1,8 +1,10 @@
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
-from django.db.models import DateTimeField, ImageField, CharField, EmailField, Model, TextField, \
-    TextChoices
+from django.db.models import (
+    DateTimeField, ImageField, CharField,
+    EmailField, Model, TextField, TextChoices
+                              )
 
 
 class CustomUserManager(BaseUserManager):

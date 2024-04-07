@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views import View
@@ -92,6 +92,10 @@ class OrderListView(LoginRequiredMixin, ListView):
         order.operator = request.user
         order.save()
         return redirect('order_update', order.pk)
+
+    def get_permission_denied_message(self):
+        print(self.request.user.type)
+        return super().get_permission_denied_message()
 
 
 class OrderREADYTODELIVERYListView(LoginRequiredMixin, ListView):
