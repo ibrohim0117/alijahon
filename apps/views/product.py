@@ -94,6 +94,61 @@ class OrderListView(LoginRequiredMixin, ListView):
         return redirect('order_update', order.pk)
 
 
+class OrderREADYTODELIVERYListView(LoginRequiredMixin, ListView):
+    template_name = 'apps/product/order_list.html'
+    context_object_name = 'orders'
+
+    def get_queryset(self):
+        return Order.objects.filter(status=Order.Status.READY_TO_DELIVERY, operator=self.request.user.id)
+
+
+class OrderARCHIVEListView(LoginRequiredMixin, ListView):
+    template_name = 'apps/product/order_list.html'
+    context_object_name = 'orders'
+
+    def get_queryset(self):
+        return Order.objects.filter(status=Order.Status.ARCHIVE, operator=self.request.user.id)
+
+
+class OrderDELIVEREDListView(LoginRequiredMixin, ListView):
+    template_name = 'apps/product/order_list.html'
+    context_object_name = 'orders'
+
+    def get_queryset(self):
+        return Order.objects.filter(status=Order.Status.DELIVERED, operator=self.request.user.id)
+
+
+class OrderBROKENListView(LoginRequiredMixin, ListView):
+    template_name = 'apps/product/order_list.html'
+    context_object_name = 'orders'
+
+    def get_queryset(self):
+        return Order.objects.filter(status=Order.Status.BROKEN, operator=self.request.user.id)
+
+
+class OrderRETURNEDListView(LoginRequiredMixin, ListView):
+    template_name = 'apps/product/order_list.html'
+    context_object_name = 'orders'
+
+    def get_queryset(self):
+        return Order.objects.filter(status=Order.Status.RETURNED, operator=self.request.user.id)
+
+
+class OrderCANCELLEDListView(LoginRequiredMixin, ListView):
+    template_name = 'apps/product/order_list.html'
+    context_object_name = 'orders'
+
+    def get_queryset(self):
+        return Order.objects.filter(status=Order.Status.CANCELLED, operator=self.request.user.id)
+
+
+class OrderWAITINGListView(LoginRequiredMixin, ListView):
+    template_name = 'apps/product/order_list.html'
+    context_object_name = 'orders'
+
+    def get_queryset(self):
+        return Order.objects.filter(status=Order.Status.WAITING, operator=self.request.user.id)
+
 class OrderUpdateView(LoginRequiredMixin, UpdateView):
     model = Order
     form_class = OrderUpdateModelForm
@@ -108,11 +163,6 @@ class OrderUpdateView(LoginRequiredMixin, UpdateView):
         contex['regions'] = regions
         return contex
 
-    # def form_valid(self, form):
-    #     return super().form_valid(form)
-    #
-    # def form_invalid(self, form):
-    #     return super().form_invalid(form)
 
 
 

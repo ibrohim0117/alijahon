@@ -8,9 +8,12 @@ from apps.views import (MainTemplateView, ProfileTemplateView,
                         LogoutRedirectView, ResetPasswordTemplateView,
                         WishlistCreateView, ShoppingListView,
                         UpdateViewProfile, OrderSuccessTemplateView,
-                        OrderCreateView)
+                        OrderCreateView, OrderListView, OrderUpdateView,
+                        OrderREADYTODELIVERYListView, OrderARCHIVEListView,
+                        OrderDELIVEREDListView, OrderBROKENListView,
+                        OrderRETURNEDListView, OrderCANCELLEDListView,
+                        OrderWAITINGListView)
 
-from apps.views.product import OrderListView, OrderUpdateView
 
 urlpatterns = [
     path('', ProductListView.as_view(), name='products'),
@@ -22,9 +25,7 @@ urlpatterns = [
     path('product/<slug:slug>', ProductDetailView.as_view(), name='product_detail'),
     path('liked/<slug:slug>', WishlistCreateView.as_view(), name='wishlist'),
     path('success-product/<int:pk>', OrderSuccessTemplateView.as_view(), name='success_product'),
-    path('order', OrderCreateView.as_view(), name='order'),
-    path('order-list', OrderListView.as_view(), name='order_list'),
-    path('order/<int:pk>/', OrderUpdateView.as_view(), name='order_update'),
+
 
     path('register', RegisterCreateView.as_view(), name='register'),
     path('login', LoginFormView.as_view(), name='login'),
@@ -33,6 +34,21 @@ urlpatterns = [
     path('lockscreen', LockScreenTemplateView.as_view(), name='lockscreen'),
     path('logout', LogoutRedirectView.as_view(), name='logout'),
     path('reset_password', ResetPasswordTemplateView.as_view(), name='reset_password'),
+]
+
+
+# order
+urlpatterns += [
+    path('order', OrderCreateView.as_view(), name='order'),
+    path('order-list', OrderListView.as_view(), name='order_list'),
+    path('order/<int:pk>/', OrderUpdateView.as_view(), name='order_update'),
+    path('yetkazishga-tayyor', OrderREADYTODELIVERYListView.as_view(), name='yetkazishga_tayyor_list'),
+    path('arxivlandi', OrderARCHIVEListView.as_view(), name='arxivlandi'),
+    path('yetkazildi', OrderDELIVEREDListView.as_view(), name='yetkazildi'),
+    path('nosoz-mahsukot', OrderBROKENListView.as_view(), name='nosoz_mahsukot'),
+    path('qaytib-keldi', OrderRETURNEDListView.as_view(), name='qaytib_keldi'),
+    path('bekor-qilindi', OrderCANCELLEDListView.as_view(), name='bekor_qilindi'),
+    path('kiyin-oladi', OrderWAITINGListView.as_view(), name='kiyin_oladi'),
 ]
 
 

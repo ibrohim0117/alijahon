@@ -121,7 +121,7 @@ class Order(BaseModel):
     operator = ForeignKey('apps.User', CASCADE, 'operator', blank=True, null=True, verbose_name='Operator')
 
     class Meta:
-        ordering = ['-id']
+        ordering = ['id']
 
 
 

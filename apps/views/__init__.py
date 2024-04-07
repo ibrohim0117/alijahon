@@ -1,6 +1,11 @@
 from apps.views.product import (OrderCreateView, ProductListView,
                                 ProductDetailView, WishlistCreateView,
-                                ShoppingListView, OrderSuccessTemplateView)
+                                ShoppingListView, OrderSuccessTemplateView,
+                                OrderListView, OrderUpdateView,
+                                OrderREADYTODELIVERYListView, OrderARCHIVEListView,
+                                OrderDELIVEREDListView, OrderBROKENListView,
+                                OrderRETURNEDListView, OrderCANCELLEDListView,
+                                OrderWAITINGListView)
 
 from apps.views.user import (MainTemplateView, ProfileTemplateView,
                              SettingsTemplateView, ResetPasswordTemplateView,
