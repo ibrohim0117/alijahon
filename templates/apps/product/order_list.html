@@ -108,13 +108,13 @@
         </div>
         <div>Buyurtmalar</div>
         <h4>ID:  721 </h4>
-        <a href="/admin_page" class="btn btn-danger btn-sm">Asosiy panel</a>
+        <a href="{% url 'products' %}" class="btn btn-danger btn-sm">Asosiy panel</a>
     </nav>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-2 sidebar">
                 <div class="list-group text-light w-100 h-100">
-                    <a href="/operator/ready" class="btn btn-primary list-group-item text-dark mt-1">
+                    <a href="{% url 'order_list' %}" class="btn btn-primary list-group-item text-dark mt-1">
                         <div>
                             <i class="fa fa-truck" aria-hidden="true"></i>
                         </div>
@@ -126,50 +126,56 @@
                         </div>
                         <h6>Dostavka tayyor</h6>
                     </a>
-                    
-                    <a href="/operator/delivering" class="btn btn-primary list-group-item text-dark mt-1">
-                        <div>
-                            <i class="fa fa-truck" aria-hidden="true"></i>
-                        </div>
-                        <h6>Yetkazilmoqda</h6>
-                    </a>
-                    <a href="/operator/waiting" class="btn btn-primary list-group-item text-dark mt-1">
+
+{#                    <a href="/operator/delivering" class="btn btn-primary list-group-item text-dark mt-1">#}
+{#                        <div>#}
+{#                            <i class="fa fa-truck" aria-hidden="true"></i>#}
+{#                        </div>#}
+{#                        <h6>Yetkazilmoqda</h6>#}
+{#                    </a>#}
+                    <a href="{% url 'kiyin_oladi' %}" class="btn btn-primary list-group-item text-dark mt-1">
                         <div>
                             <i class="fa fa-clock-o" aria-hidden="true"></i>
                         </div>
                         <h6>Keyin oladi</h6>
                     </a>
-                    <a href="/operator/archived" class="btn btn-primary list-group-item text-dark mt-1">
+
+                    <a href="{% url 'arxivlandi' %}" class="btn btn-primary list-group-item text-dark mt-1">
                         <div>
                             <i class="fa fa-archive" aria-hidden="true"></i>
                         </div>
                         <h6>Arxivlandi</h6>
                     </a>
-                    <a href="/operator/broken" class="btn btn-primary list-group-item text-dark mt-1">
+
+                    <a href="{% url 'nosoz_mahsukot' %}" class="btn btn-primary list-group-item text-dark mt-1">
                         <div>
                             <i class="fa fa-chain-broken" aria-hidden="true"></i>
                         </div>
                         <h6>Nosoz, bekor qilindi</h6>
                     </a>
-                    <a href="/operator/delivered" class="btn btn-primary list-group-item text-dark mt-1">
+
+                    <a href="{% url 'yetkazildi' %}" class="btn btn-primary list-group-item text-dark mt-1">
                         <div>
                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                         </div>
                         <h6>Yetkazib berildi</h6>
                     </a>
-                    <a href="/operator/cancelled" class="btn btn-primary list-group-item text-dark mt-1">
+
+                    <a href="{% url 'qaytib_keldi' %}" class="btn btn-primary list-group-item text-dark mt-1">
                         <div>
                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                         </div>
                         <h6>Qaytib keldi</h6>
                     </a>
-                    <a href="/operator/hold" class="btn btn-primary list-group-item text-dark mt-1">
+
+                    <a href="#" class="btn btn-primary list-group-item text-dark mt-1">
                         <div>
                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                         </div>
                         <h6>Hold</h6>
                     </a>
-                    <a href="/operator/all" class="btn btn-primary list-group-item text-dark mt-1">
+
+                    <a href="#" class="btn btn-primary list-group-item text-dark mt-1">
                         <div>
                             <i class="fa fa-newspaper-o" aria-hidden="true"></i>
                         </div>
