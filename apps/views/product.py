@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, get_object_or_404
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views import View
 from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView
 
@@ -98,7 +98,7 @@ class OrderUpdateView(LoginRequiredMixin, UpdateView):
     model = Order
     form_class = OrderUpdateModelForm
     template_name = 'apps/product/order_update.html'
-    success_url = 'order_list'
+    success_url = reverse_lazy('order_list')
 
     def get_context_data(self, **kwargs):
         contex = super().get_context_data(**kwargs)
@@ -108,11 +108,11 @@ class OrderUpdateView(LoginRequiredMixin, UpdateView):
         contex['regions'] = regions
         return contex
 
-    def form_valid(self, form):
-        return super().form_valid(form)
-
-    def form_invalid(self, form):
-        return super().form_invalid(form)
+    # def form_valid(self, form):
+    #     return super().form_valid(form)
+    #
+    # def form_invalid(self, form):
+    #     return super().form_invalid(form)
 
 
 
