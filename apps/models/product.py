@@ -125,9 +125,24 @@ class Order(BaseModel):
 
     class Meta:
         ordering = ['id']
+        verbose_name = 'Zakaz'
+        verbose_name_plural = 'Zakazlar'
 
     def __str__(self):
         return self.product.name
+
+
+class Stream(BaseModel):
+    user = ForeignKey('apps.User', CASCADE)
+    product = ForeignKey('apps.Product', CASCADE)
+
+    class Meta:
+        verbose_name = 'Oqim'
+        verbose_name_plural = 'Oqimlar'
+
+    def __str__(self):
+        return f'{self.product.name} --> {self.user}'
+
 
 
 

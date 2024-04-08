@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.models import Group
 
 from apps.models import Product, ProductImage, Category
-from apps.models.product import Order
+from apps.models.product import Order, Stream
 from apps.proxy import UserProxy, CouriersProxy, AdminProxy, OperatorProxy, MangerProxyModel
 
 
@@ -44,6 +44,11 @@ class ManagerModelAdmin(admin.ModelAdmin):
     search_fields = ('phone', )
 
 
-admin.site.register(Order)
+@admin.register(Order)
+class OrderModelAdmin(admin.ModelAdmin):
+    list_display = ('full_name', 'quantity', 'phone')
+
+
+admin.site.register(Stream)
 admin.site.register(Category)
 admin.site.unregister(Group)

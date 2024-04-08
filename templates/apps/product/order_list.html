@@ -194,9 +194,9 @@
                             <ul class="text-muted">
                                 <li class="">Reklama tarqatuvchi ID: 998335726021</li>
                                 <li class="">Client: {{ order.phone }} - +9989XXXXXXXX</li>
-                                <li class="">Address: {{order.region}} {{ order.district }} {{ order.street }}</li>
+                                <li class="">Address: {{order.region.name}} {{ order.district }} {{ order.street }}</li>
                                 <li class="">Narxi: {{ order.product.price }} so'm <strong>+ 30000</strong> so'm  </li>
-                                <li class="">Soni: 1ta</li>
+                                <li class="">Soni: {{ order.quantity }}ta</li>
                                 <li class="">Vaqti: {{ order.created_at }}</li>
                                 <li class="">Yangilangan vaqti: {{ order.update_at }}</li>
                                 <li class="">Holati: {{ order.status }}</li>

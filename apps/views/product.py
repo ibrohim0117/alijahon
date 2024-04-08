@@ -93,65 +93,49 @@ class OrderListView(LoginRequiredMixin, ListView):
         order.save()
         return redirect('order_update', order.pk)
 
-    def get_permission_denied_message(self):
-        print(self.request.user.type)
-        return super().get_permission_denied_message()
 
-
-class OrderREADYTODELIVERYListView(LoginRequiredMixin, ListView):
+class BaseOperatorListView(LoginRequiredMixin, ListView):
     template_name = 'apps/product/order_list.html'
     context_object_name = 'orders'
 
     def get_queryset(self):
-        return Order.objects.filter(status=Order.Status.READY_TO_DELIVERY, operator=self.request.user.id)
+        return Order.objects.filter(operator=self.request.user.id)
 
 
-class OrderARCHIVEListView(LoginRequiredMixin, ListView):
-    template_name = 'apps/product/order_list.html'
-    context_object_name = 'orders'
-
+class OrderREADYTODELIVERYListView(BaseOperatorListView):
     def get_queryset(self):
-        return Order.objects.filter(status=Order.Status.ARCHIVE, operator=self.request.user.id)
+        return super().get_queryset().filter(status=Order.Status.READY_TO_DELIVERY)
 
 
-class OrderDELIVEREDListView(LoginRequiredMixin, ListView):
-    template_name = 'apps/product/order_list.html'
-    context_object_name = 'orders'
-
+class OrderARCHIVEListView(BaseOperatorListView):
     def get_queryset(self):
-        return Order.objects.filter(status=Order.Status.DELIVERED, operator=self.request.user.id)
+        return super().get_queryset().filter(status=Order.Status.ARCHIVE)
 
 
-class OrderBROKENListView(LoginRequiredMixin, ListView):
-    template_name = 'apps/product/order_list.html'
-    context_object_name = 'orders'
-
+class OrderDELIVEREDListView(BaseOperatorListView):
     def get_queryset(self):
-        return Order.objects.filter(status=Order.Status.BROKEN, operator=self.request.user.id)
+        return super().get_queryset().filter(status=Order.Status.DELIVERED)
 
 
-class OrderRETURNEDListView(LoginRequiredMixin, ListView):
-    template_name = 'apps/product/order_list.html'
-    context_object_name = 'orders'
-
+class OrderBROKENListView(BaseOperatorListView):
     def get_queryset(self):
-        return Order.objects.filter(status=Order.Status.RETURNED, operator=self.request.user.id)
+        return super().get_queryset().filter(status=Order.Status.BROKEN)
 
 
-class OrderCANCELLEDListView(LoginRequiredMixin, ListView):
-    template_name = 'apps/product/order_list.html'
-    context_object_name = 'orders'
-
+class OrderRETURNEDListView(BaseOperatorListView):
     def get_queryset(self):
-        return Order.objects.filter(status=Order.Status.CANCELLED, operator=self.request.user.id)
+        return super().get_queryset().filter(status=Order.Status.RETURNED)
 
 
-class OrderWAITINGListView(LoginRequiredMixin, ListView):
-    template_name = 'apps/product/order_list.html'
-    context_object_name = 'orders'
-
+class OrderCANCELLEDListView(BaseOperatorListView):
     def get_queryset(self):
-        return Order.objects.filter(status=Order.Status.WAITING, operator=self.request.user.id)
+        return super().get_queryset().filter(status=Order.Status.CANCELLED)
+
+
+class OrderWAITINGListView(BaseOperatorListView):
+    def get_queryset(self):
+        return super().get_queryset().filter(status=Order.Status.WAITING)
+
 
 class OrderUpdateView(LoginRequiredMixin, UpdateView):
     model = Order
