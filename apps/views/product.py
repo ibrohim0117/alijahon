@@ -152,6 +152,13 @@ class OrderUpdateView(LoginRequiredMixin, UpdateView):
         return contex
 
 
+class MarketListView(LoginRequiredMixin, ListView):
+    queryset = Product.objects.all()
+    template_name = 'apps/product/market.html'
+    context_object_name = 'products'
+    ordering = ['-created_at']
+
+
 
 
 

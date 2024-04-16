@@ -13,7 +13,7 @@ from apps.views import (MainTemplateView, ProfileTemplateView,
                         OrderDELIVEREDListView, OrderBROKENListView,
                         OrderRETURNEDListView, OrderCANCELLEDListView,
                         OrderWAITINGListView)
-
+from apps.views.product import MarketListView
 
 urlpatterns = [
     path('', ProductListView.as_view(), name='products'),
@@ -49,6 +49,10 @@ urlpatterns += [
     path('qaytib-keldi', OrderRETURNEDListView.as_view(), name='qaytib_keldi'),
     path('bekor-qilindi', OrderCANCELLEDListView.as_view(), name='bekor_qilindi'),
     path('kiyin-oladi', OrderWAITINGListView.as_view(), name='kiyin_oladi'),
+
+
+    path('market', MarketListView.as_view(), name='market')
+
 ]
 
 
