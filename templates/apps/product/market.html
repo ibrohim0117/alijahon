@@ -23,11 +23,11 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form method="POST" class="form-class">
-                                <input type="hidden" name="csrfmiddlewaretoken" value="9Dk9A4LpRKbJr0XLPEinbqLbSAEVAk1GRVssMbT4VQxS7eA5IUP375q9XaIfSSi9">
-                                <input name="product_id" type="hidden" id="hidden_product" value="test">
+                            <form method="POST" action="{% url 'stream' %}" class="form-class">
+                                {% csrf_token %}
+                                <input name="product" type="hidden" id="hidden_product" value="test">
 
-                                    Oqim nomi <input type="text" name="title" class="form-control" placeholder mt-2="Oqim uchun nom kiriting" required id="id_title">
+                                    Oqim nomi <input type="text" name="name" class="form-control" placeholder mt-2="Oqim uchun nom kiriting" required id="id_title">
 
                                     Chegirma <input type="text" name="discount" class="form-control" placeholder mt-2="Chegirma miqdori: {{ product.benefit }} so&#x27;mgacha" id="id_discount">
 
@@ -123,7 +123,7 @@
                                     <a href="https://t.me/alijahon_uz_Internet_magazin/1306" class="btn bg-danger text-white mt-2">Reklama
                                         Posti</a>
                                 <button class="btn btn-primary btn_open_modal" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal" name="389">
+                                        data-bs-target="#exampleModal" name="{{ product.id }}">
                                     Oqim yaratish
                                 </button>
                                 <a href="/admin_page/product/389" class="btn bg-danger text-white mt-2">Batafsil</a>
@@ -131,18 +131,10 @@
                         </div>
                         
                     {% endfor %}
-                    
-
 
                         <nav aria-label="Page navigation example">
-    <ul class="pagination">
-
-
-
+                <ul class="pagination">
                 <li class="page-item"><a class="page-link " href="?page=1">1</a></li>
-
-
-
                 <li class="page-item"><a class="page-link " href="?page=2">2</a></li>
 
 
@@ -196,5 +188,17 @@
     </div>
 
 
-    {% include 'apps/parts/footer.html' %}
+{% include 'apps/parts/footer.html' %}
 {% endblock %}
+
+
+{% block javascript %}
+    <script>
+        $('.btn_open_modal').on('click', function () {
+            let product_id = $(this).attr('name');
+            console.log(product_id);
+            $('#hidden_product').val(product_id);
+        })
+    </script>
+{% endblock %}
+

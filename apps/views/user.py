@@ -6,7 +6,7 @@ from django.views import View
 from django.views.generic import TemplateView, CreateView, FormView, UpdateView
 
 from apps.forms import UserRegisterForm, UserLoginForm, UserUpdateProfileForm
-from apps.mixsins import NotLoginRequiredMixin
+from apps.mixins import NotLoginRequiredMixin
 from apps.models import User
 from apps.tasks import task_send_mail
 

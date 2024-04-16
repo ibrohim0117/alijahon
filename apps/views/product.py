@@ -2,9 +2,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView, FormView
 
-from apps.forms import OrderCreateForm, OrderUpdateModelForm
+from apps.forms import OrderCreateForm, OrderUpdateModelForm, StreamCreateForm
 from apps.models import Product, Wishlist
 from apps.models.product import Order, Region
 
@@ -145,10 +145,11 @@ class OrderUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         contex = super().get_context_data(**kwargs)
-        order = Order.objects.filter(id=self.kwargs.get('pk')).first()
-        regions = Region.objects.all()
-        contex['order'] = order
-        contex['regions'] = regions
+        # TODO   nega quyganimni bilmayabman
+        self.get_object()
+        # order = Order.objects.filter(id=self.kwargs.get('pk')).first()
+        # contex['order'] = order
+        contex['regions'] = Region.objects.all()
         return contex
 
 
@@ -159,12 +160,12 @@ class MarketListView(LoginRequiredMixin, ListView):
     ordering = ['-created_at']
 
 
+class StreamFormView(LoginRequiredMixin, FormView):
+    form_class = StreamCreateForm
+    template_name = 'apps/product/market.html'
 
-
-
-
-
-
-
-
-
+    def form_valid(self, form):
+        stream = form.save(False)
+        stream.user = self.request.user
+        stream.save()
+        return redirect('market')

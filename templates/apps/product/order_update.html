@@ -169,7 +169,7 @@
             </div>
         
             <div class="form-check">
-                <input required class="sr-only form-check-input" type="radio" name="status" id="ready_to_deliver" value="yetkazishga_tayyor" {% if order.status == 'yetkazishga_tayyor' %} checked {% endif %}>
+                <input required class="sr-only form-check-input" type="radio" name="status" id="ready_to_deliver" value="yetkazishga_tayyor" {% if order.status == order.Status.READY_TO_DELIVERY %} checked {% endif %}>
                 <label class="form-check-label" for="new_order">
                     Dastavkaga tayyor
                 </label>

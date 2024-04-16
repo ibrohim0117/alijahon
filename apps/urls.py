@@ -13,7 +13,7 @@ from apps.views import (MainTemplateView, ProfileTemplateView,
                         OrderDELIVEREDListView, OrderBROKENListView,
                         OrderRETURNEDListView, OrderCANCELLEDListView,
                         OrderWAITINGListView)
-from apps.views.product import MarketListView
+from apps.views.product import MarketListView, StreamFormView
 
 urlpatterns = [
     path('', ProductListView.as_view(), name='products'),
@@ -51,7 +51,8 @@ urlpatterns += [
     path('kiyin-oladi', OrderWAITINGListView.as_view(), name='kiyin_oladi'),
 
 
-    path('market', MarketListView.as_view(), name='market')
+    path('market', MarketListView.as_view(), name='market'),
+    path('stream', StreamFormView.as_view(), name='stream')
 
 ]
 

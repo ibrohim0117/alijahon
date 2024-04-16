@@ -69,3 +69,7 @@ class User(AbstractUser):
     @property
     def wishlist_count(self):
         return self.wishlist_set.count()
+
+    @property
+    def is_operator(self):
+        return self.type == self.Type.OPERATOR

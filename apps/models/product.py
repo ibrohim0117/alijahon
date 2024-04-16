@@ -131,8 +131,12 @@ class Order(BaseModel):
     def __str__(self):
         return self.product.name
 
+    @property
+    def is_ready_to_delivery(self):
+        return
 
 class Stream(BaseModel):
+    name = CharField(max_length=25)
     user = ForeignKey('apps.User', CASCADE)
     product = ForeignKey('apps.Product', CASCADE)
 
