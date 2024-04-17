@@ -5,6 +5,7 @@ from django.views import View
 from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView, FormView
 
 from apps.forms import OrderCreateForm, OrderUpdateModelForm, StreamCreateForm
+from apps.mixins import NotOperatorRequiredMixin
 from apps.models import Product, Wishlist
 from apps.models.product import Order, Region
 
@@ -94,7 +95,7 @@ class OrderListView(LoginRequiredMixin, ListView):
         return redirect('order_update', order.pk)
 
 
-class BaseOperatorListView(LoginRequiredMixin, ListView):
+class BaseOperatorListView(NotOperatorRequiredMixin, ListView):
     template_name = 'apps/product/order_list.html'
     context_object_name = 'orders'
 
