@@ -161,7 +161,7 @@
             <label>Status</label><br>
         
         <div class="form-check">
-                <input required class="sr-only form-check-input" type="radio" name="status" id="new_order" value="yangi" {% if order.status == 'yangi' %} checked {% endif %}>
+                <input required class="sr-only form-check-input" type="radio" name="status" id="new_order" value="yangi" {% if order.status == order.Status.NEW %} checked {% endif %}>
                 <label class="form-check-label" for="new_order">
                     Yangi buyurtma
                 </label>
@@ -178,7 +178,7 @@
         
         
             <div class="form-check">
-                <input required class="sr-only form-check-input" type="radio" name="status" id="waiting" value="kiyin_oladi" {% if order.status == 'kiyin_oladi' %} checked {% endif %}>
+                <input required class="sr-only form-check-input" type="radio" name="status" id="waiting" value="kiyin_oladi" {% if order.status == order.Status.WAITING %} checked {% endif %}>
                 <label class="form-check-label" for="new_order">
                     Kiyin oladi
                 </label>
@@ -187,7 +187,7 @@
         
         
         <div class="form-check">
-                <input required class="sr-only form-check-input" type="radio" name="status" id="broken" value="nosoz_mahsukot" {% if order.status == 'nosoz_mahsukot' %} checked {% endif %}>
+                <input required class="sr-only form-check-input" type="radio" name="status" id="broken" value="nosoz_mahsukot" {% if order.status == order.Status.BROKEN %} checked {% endif %}>
                 <label class="form-check-label" for="new_order">
                     Nosoz, bekor qilindi
                 </label>
@@ -196,7 +196,7 @@
         
         
         <div class="form-check">
-                <input required class="sr-only form-check-input" type="radio" name="status" id="archive" value="arxivlandi" {% if order.status == 'arxivlandi' %} checked {% endif %}>
+                <input required class="sr-only form-check-input" type="radio" name="status" id="archive" value="arxivlandi" {% if order.status == order.Status.ARCHIVE %} checked {% endif %}>
                 <label class="form-check-label" for="new_order">
                     Arxivlandi
                 </label>

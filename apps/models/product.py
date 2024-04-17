@@ -135,6 +135,7 @@ class Order(BaseModel):
     def is_ready_to_delivery(self):
         return
 
+
 class Stream(BaseModel):
     name = CharField(max_length=25)
     user = ForeignKey('apps.User', CASCADE)

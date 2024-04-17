@@ -145,7 +145,6 @@ class OrderUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         contex = super().get_context_data(**kwargs)
-        # TODO   nega quyganimni bilmayabman
         self.get_object()
         # order = Order.objects.filter(id=self.kwargs.get('pk')).first()
         # contex['order'] = order
