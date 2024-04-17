@@ -7,7 +7,7 @@ from django.views.generic import ListView, DetailView, TemplateView, CreateView,
 from apps.forms import OrderCreateForm, OrderUpdateModelForm, StreamCreateForm
 from apps.mixins import NotOperatorRequiredMixin
 from apps.models import Product, Wishlist
-from apps.models.product import Order, Region
+from apps.models.product import Order, Region, Stream
 
 
 class ProductListView(ListView):
@@ -96,11 +96,12 @@ class OrderListView(LoginRequiredMixin, ListView):
 
 
 class BaseOperatorListView(NotOperatorRequiredMixin, ListView):
+    queryset = Order.objects.all()
     template_name = 'apps/product/order_list.html'
     context_object_name = 'orders'
 
     def get_queryset(self):
-        return Order.objects.filter(operator=self.request.user.id)
+        return super().get_queryset().filter(operator=self.request.user)
 
 
 class OrderREADYTODELIVERYListView(BaseOperatorListView):
@@ -169,3 +170,27 @@ class StreamFormView(LoginRequiredMixin, FormView):
         stream.user = self.request.user
         stream.save()
         return redirect('market')
+
+
+class StreamListView(LoginRequiredMixin, ListView):
+    queryset = Stream.objects.all()
+    template_name = 'apps/product/stream-list.html'
+    context_object_name = 'streams'
+
+    def get_queryset(self):
+        return super().get_queryset().filter(user=self.request.user)
+
+
+class StreamDetailView(DetailView):
+    model = Stream
+    template_name = 'apps/product/product-details.html'
+    context_object_name = 'product'
+
+    def get_object(self, queryset=None):
+        pk = self.kwargs.get('pk')
+        stream = get_object_or_404(Stream.objects.all(), pk=pk)
+        print(stream)
+        return stream.product
+
+
+
