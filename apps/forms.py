@@ -41,10 +41,11 @@ class WishlistForm(ModelForm):
 
 
 class OrderCreateForm(ModelForm):
+    stream = ModelChoiceField(queryset=Stream.objects.all(), required=False)
 
     class Meta:
         model = Order
-        fields = ['full_name', 'phone', 'product']
+        fields = ['full_name', 'phone', 'product', 'stream']
 
 
 class StreamCreateForm(ModelForm):

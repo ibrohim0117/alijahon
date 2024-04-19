@@ -9,7 +9,7 @@ from django.utils.text import slugify
 from django.db.models import (
     ForeignKey, CASCADE, DateTimeField,
     CharField, Model, PositiveIntegerField,
-    SlugField, FloatField, IntegerField, TextChoices
+    SlugField, FloatField, IntegerField, TextChoices, SET_NULL
 )
 
 
@@ -119,8 +119,9 @@ class Order(BaseModel):
     user = ForeignKey('apps.User', CASCADE, 'user', blank=True, null=True, verbose_name='Foydalanuvchi')
     comment = CharField(max_length=255, blank=True, null=True)
     region = ForeignKey('apps.Region', CASCADE, verbose_name='Viloyat', blank=True, null=True)
+    stream = ForeignKey('apps.Stream', SET_NULL, blank=True, null=True)
     district = ForeignKey('apps.District', CASCADE, verbose_name='Tuman', blank=True, null=True)
-    street = CharField(max_length=25, verbose_name='Ko\'cha', blank=True, null=True)
+    street = CharField(max_length=25, verbose_name="Ko'cha", blank=True, null=True)
     operator = ForeignKey('apps.User', CASCADE, 'operator', blank=True, null=True, verbose_name='Operator')
 
     class Meta:

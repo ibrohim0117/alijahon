@@ -22,7 +22,19 @@ class ProductDetailView(DetailView):
     template_name = 'apps/product/product-details.html'
     model = Product
     context_object_name = 'product'
-    slug_url_kwarg = 'slug'
+
+    def get_object(self, queryset=None):
+        pk = self.kwargs.get(self.pk_url_kwarg)  # stream
+        slug = self.kwargs.get(self.slug_url_kwarg)  # product
+        if pk:
+            stream = get_object_or_404(Stream.objects.all(), pk=pk)
+            return stream.product
+        return get_object_or_404(Product.objects.all(), slug=slug)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['stream_id'] = self.kwargs.get(self.pk_url_kwarg)
+        return context
 
 
 class WishlistCreateView(LoginRequiredMixin, View):

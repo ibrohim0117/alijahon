@@ -22,7 +22,8 @@ urlpatterns = [
     path('update', UpdateViewProfile.as_view(), name='update_profile'),
     path('settings', SettingsTemplateView.as_view(), name='settings'),
     path('shop', ShoppingListView.as_view(), name='shop'),
-    path('product/<slug:slug>', ProductDetailView.as_view(), name='product_detail'),
+    path('product/<str:slug>', ProductDetailView.as_view(), name='product_detail'),
+    path('stream-list/<int:pk>/', ProductDetailView.as_view(), name='stream_detail'),
     path('liked/<slug:slug>', WishlistCreateView.as_view(), name='wishlist'),
     path('success-product/<int:pk>', OrderSuccessTemplateView.as_view(), name='success_product'),
 
@@ -54,7 +55,6 @@ urlpatterns += [
     path('market', MarketListView.as_view(), name='market'),
     path('stream', StreamFormView.as_view(), name='stream'),
     path('stream-list', StreamListView.as_view(), name='stream_list'),
-    path('stream-list/<int:pk>/', StreamDetailView.as_view(), name='stream_detail'),
 
 ]
 

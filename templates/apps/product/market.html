@@ -23,7 +23,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form method="POST" action="{% url 'stream' %}" class="form-class">
+                            <form method="POST" action="{% url 'stream_list' %}" class="form-class">
                                 {% csrf_token %}
                                 <input name="product" type="hidden" id="hidden_product" value="test">
 
