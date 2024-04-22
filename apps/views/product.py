@@ -33,7 +33,7 @@ class ProductDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['stream_id'] = self.kwargs.get(self.pk_url_kwarg)
+        context['stream_id'] = self.kwargs.get(self.pk_url_kwarg, '')
         return context
 
 
@@ -203,6 +203,16 @@ class StreamDetailView(DetailView):
         stream = get_object_or_404(Stream.objects.all(), pk=pk)
         print(stream)
         return stream.product
+
+
+class StatistikaListView(LoginRequiredMixin, ListView):
+    queryset = Stream.objects.all()
+    template_name = 'apps/product/statistika.html'
+    context_object_name = 'statistika'
+
+    def get_queryset(self):
+        return super().get_queryset().filter(user=self.request.user)
+
 
 
 
