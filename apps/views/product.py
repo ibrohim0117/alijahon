@@ -75,8 +75,13 @@ class OrderCreateView(CreateView):
         return redirect('product_detail', slug=slug)
 
     def form_valid(self, form):
-        data = form.save()
-        return redirect('success_product', data.id)
+        order = form.save(False)
+        order.user = self.request.user
+        order.save()
+        return redirect('success_product', order.id)
+
+    def get_queryset(self):
+        return self.request.user
 
 
 class OrderSuccessTemplateView(TemplateView):
@@ -209,6 +214,15 @@ class StatistikaListView(LoginRequiredMixin, ListView):
     queryset = Stream.objects.all()
     template_name = 'apps/product/statistika.html'
     context_object_name = 'statistika'
+
+    def get_queryset(self):
+        return super().get_queryset().filter(user=self.request.user)
+
+
+class MyOrdersListView(LoginRequiredMixin, ListView):
+    queryset = Order.objects.all()
+    template_name = 'apps/product/my_orders.html'
+    context_object_name = 'orders'
 
     def get_queryset(self):
         return super().get_queryset().filter(user=self.request.user)

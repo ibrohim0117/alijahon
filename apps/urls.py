@@ -13,7 +13,8 @@ from apps.views import (MainTemplateView, ProfileTemplateView,
                         OrderDELIVEREDListView, OrderBROKENListView,
                         OrderRETURNEDListView, OrderCANCELLEDListView,
                         OrderWAITINGListView)
-from apps.views.product import MarketListView, StreamFormView, StreamListView, StreamDetailView, StatistikaListView
+from apps.views.product import MarketListView, StreamFormView, StreamListView, StreamDetailView, StatistikaListView, \
+    MyOrdersListView
 
 urlpatterns = [
     path('', ProductListView.as_view(), name='products'),
@@ -41,6 +42,7 @@ urlpatterns = [
 # order
 urlpatterns += [
     path('order', OrderCreateView.as_view(), name='order'),
+    path('my-order', MyOrdersListView.as_view(), name='my_order'),
     path('order-list', OrderListView.as_view(), name='order_list'),
     path('order/<int:pk>/', OrderUpdateView.as_view(), name='order_update'),
     path('yetkazishga-tayyor', OrderREADYTODELIVERYListView.as_view(), name='yetkazishga_tayyor_list'),
