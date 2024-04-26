@@ -80,9 +80,6 @@ class OrderCreateView(CreateView):
         order.save()
         return redirect('success_product', order.id)
 
-    def get_queryset(self):
-        return self.request.user
-
 
 class OrderSuccessTemplateView(TemplateView):
     template_name = 'apps/product/order_success.html'
@@ -189,13 +186,13 @@ class StreamFormView(LoginRequiredMixin, FormView):
         return redirect('market')
 
 
-class StreamListView(LoginRequiredMixin, ListView):
-    queryset = Stream.objects.all()
+class StreamListView(LoginRequiredMixin, TemplateView):
+    # queryset = Stream.objects.all()
     template_name = 'apps/product/stream-list.html'
-    context_object_name = 'streams'
-
-    def get_queryset(self):
-        return super().get_queryset().filter(user=self.request.user)
+    # context_object_name = 'streams'
+    #
+    # def get_queryset(self):
+    #     return super().get_queryset().filter(user=self.request.user)
 
 
 class StreamDetailView(DetailView):
@@ -206,7 +203,6 @@ class StreamDetailView(DetailView):
     def get_object(self, queryset=None):
         pk = self.kwargs.get('pk')
         stream = get_object_or_404(Stream.objects.all(), pk=pk)
-        print(stream)
         return stream.product
 
 

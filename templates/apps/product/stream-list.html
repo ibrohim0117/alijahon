@@ -16,7 +16,7 @@
                 <h3 class="text-center"> Mening havolalarim </h3>
                 <br>
                 <div class="row">
-                    {% for stream in streams %}
+                    {% for stream in user.stream_set.all %}
                         <div class="col-sm-4">
                             <div class="card-header">
                                 <!-- <a href="#" onclick="myFunction(57699)" data-request="onDeleteStream"
