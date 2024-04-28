@@ -32,7 +32,6 @@
                         <th scope="col">Mahsulot</th>
                         <th scope="col">Tashrif</th>
                         <th scope="col">Yangi</th>
-                        <th scope="col">Dastavkaga tayyor</th>
                         <th scope="col">Yetkazilmoqda</th>
                         <th scope="col">Yetqazib berildi</th>
                         <th scope="col">Telefon ko'tarmadi</th>
@@ -51,8 +50,7 @@
                         <td> 0</td>
                         <td> 0</td>
                         <td> 0</td>
-                        <td> 0</td>
-                    </tr>
+                        </tr>
                     </thead>
 
                     <tbody class="text-center">
@@ -60,16 +58,15 @@
                     {% for order in statistika %}
                     
                     <tr>
-                        <th>ali</th>
+                        <th>{{ order.name }}</th>
                         <th>{{ order.product.name }}</th>   
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
+                        <td>{{ order.count }}</td>
+                        <td>{{ order.yangi }}</td>
+                        <td>{{ order.yetkazishga_tayyor }}</td>
+                        <td>{{ order.yetkazildi }}</td>
+                        <td>{{ order.kiyin_oladi }}</td>
+                        <td>{{ order.bekor_qilindi }}</td>
+                        <td>{{ order.arxivlandi }}</td>
                     </tr>
                     
                     {% endfor %}
@@ -77,7 +74,6 @@
                     <tr class="bg-info">
                         <td> JAMI</td>
                         <td></td>
-                        <td> 0</td>
                         <td> 0</td>
                         <td> 0</td>
                         <td> 0</td>

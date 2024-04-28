@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Count, Q
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
@@ -207,7 +208,14 @@ class StreamDetailView(DetailView):
 
 
 class StatistikaListView(LoginRequiredMixin, ListView):
-    queryset = Stream.objects.all()
+    queryset = Stream.objects.annotate(
+        yangi=Count('orders', filter=Q(orders__status='yangi')),
+        arxivlandi=Count('orders', filter=Q(orders__status='arxivlandi')),
+        yetkazishga_tayyor=Count('orders', filter=Q(orders__status='yetkazishga_tayyor')),
+        yetkazildi=Count('orders', filter=Q(orders__status='yetkazildi')),
+        kiyin_oladi=Count('orders', filter=Q(orders__status='kiyin_oladi')),
+        bekor_qilindi=Count('orders', filter=Q(orders__status='bekor_qilindi'))
+    ).all()
     template_name = 'apps/product/statistika.html'
     context_object_name = 'statistika'
 
@@ -222,6 +230,11 @@ class MyOrdersListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return super().get_queryset().filter(user=self.request.user)
+
+
+
+# Stream.objects.annotate(new_count=Count('orders', filter=Q(orders__status='yangi')),
+# cancel_count=Count('orders', filter=Q(orders__status='arxivlandi'))).values('name', 'product__name', 'count', 'new_count', 'cancel_count')
 
 
 
