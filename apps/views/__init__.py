@@ -5,7 +5,9 @@ from apps.views.product import (OrderCreateView, ProductListView,
                                 OrderREADYTODELIVERYListView, OrderARCHIVEListView,
                                 OrderDELIVEREDListView, OrderBROKENListView,
                                 OrderRETURNEDListView, OrderCANCELLEDListView,
-                                OrderWAITINGListView)
+                                OrderWAITINGListView, MarketListView,
+                                StreamFormView, StreamListView,
+                                StatistikaListView, MyOrdersListView)
 
 from apps.views.user import (MainTemplateView, ProfileTemplateView,
                              SettingsTemplateView, ResetPasswordTemplateView,

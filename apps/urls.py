@@ -12,9 +12,9 @@ from apps.views import (MainTemplateView, ProfileTemplateView,
                         OrderREADYTODELIVERYListView, OrderARCHIVEListView,
                         OrderDELIVEREDListView, OrderBROKENListView,
                         OrderRETURNEDListView, OrderCANCELLEDListView,
-                        OrderWAITINGListView)
-from apps.views.product import MarketListView, StreamFormView, StreamListView, StreamDetailView, StatistikaListView, \
-    MyOrdersListView
+                        OrderWAITINGListView, MarketListView,
+                        StreamFormView, StreamListView,
+                        StatistikaListView, MyOrdersListView)
 
 urlpatterns = [
     path('', ProductListView.as_view(), name='products'),
