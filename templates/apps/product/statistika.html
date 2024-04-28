@@ -55,18 +55,18 @@
 
                     <tbody class="text-center">
 
-                    {% for order in statistika %}
+                    {% for oqim in statistika %}
                     
                     <tr>
-                        <th>{{ order.name }}</th>
-                        <th>{{ order.product.name }}</th>   
-                        <td>{{ order.count }}</td>
-                        <td>{{ order.yangi }}</td>
-                        <td>{{ order.yetkazishga_tayyor }}</td>
-                        <td>{{ order.yetkazildi }}</td>
-                        <td>{{ order.kiyin_oladi }}</td>
-                        <td>{{ order.bekor_qilindi }}</td>
-                        <td>{{ order.arxivlandi }}</td>
+                        <th>{{ oqim.name }}</th>
+                        <th>{{ oqim.product.name }}</th>   
+                        <td>{{ oqim.count }}</td>
+                        <td>{{ oqim.yangi }}</td>
+                        <td>{{ oqim.yetkazishga_tayyor }}</td>
+                        <td>{{ oqim.yetkazildi }}</td>
+                        <td>{{ oqim.kiyin_oladi }}</td>
+                        <td>{{ oqim.bekor_qilindi }}</td>
+                        <td>{{ oqim.arxivlandi }}</td>
                     </tr>
                     
                     {% endfor %}
