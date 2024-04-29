@@ -183,9 +183,23 @@
                     </a>
                 </div>
             </div>
+        
+        
+        
             <div class="col-md-10 content">
+            
                 <div class="bg-light w-75 m-auto mt-5">
+                <form>
+                      <div>
+                        <p>
+                          <label for="id_name">Mahsulot nomi:</label>
+                          <input type="text" name="name" value="SAM" id="id_name">
+                        </p>
+                      </div>
+                      <input class="btn btn-primary" type="submit" value="Saqlash">
+                    </form>
                     <div class="card border-dark mt-5">
+                    
                         <!-- Main content with orders -->
                         {% for order in orders %}
                         <div class="card-body">

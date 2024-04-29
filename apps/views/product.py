@@ -29,6 +29,8 @@ class ProductDetailView(DetailView):
         slug = self.kwargs.get(self.slug_url_kwarg)  # product
         if pk:
             stream = get_object_or_404(Stream.objects.all(), pk=pk)
+            stream.count += 1
+            stream.save()
             return stream.product
         return get_object_or_404(Product.objects.all(), slug=slug)
 
@@ -221,6 +223,14 @@ class StatistikaListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return super().get_queryset().filter(user=self.request.user)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(object_list=object_list, **kwargs)
+        count = yangi = 0
+        for i in context['statistika']:
+            count += i.count
+            yangi += i.yangi
+        return context
 
 
 class MyOrdersListView(LoginRequiredMixin, ListView):
