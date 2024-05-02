@@ -226,13 +226,25 @@ class StatistikaListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(object_list=object_list, **kwargs)
-        count = yangi = 0
+        jami = yangi = arxiv = y_tayyor = yetkazildi = k_oladi = b_qilindi = 0
         for i in context['statistika']:
-            count += i.count
+            jami += i.count
             yangi += i.yangi
+            arxiv += i.arxivlandi
+            y_tayyor += i.yetkazishga_tayyor
+            yetkazildi += i.yetkazildi
+            k_oladi += i.kiyin_oladi
+            b_qilindi += i.bekor_qilindi
+        context['jami'] = jami
+        context['yangi'] = yangi
+        context['arxiv'] = arxiv
+        context['y_tayyor'] = y_tayyor
+        context['yetkazildi'] = yetkazildi
+        context['k_oladi'] = k_oladi
+        context['b_qilindi'] = b_qilindi
         return context
 
-
+# 883149904
 class MyOrdersListView(LoginRequiredMixin, ListView):
     queryset = Order.objects.all()
     template_name = 'apps/product/my_orders.html'
