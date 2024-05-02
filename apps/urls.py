@@ -16,6 +16,7 @@ from apps.views import (MainTemplateView, ProfileTemplateView,
                         StreamFormView, StreamListView,
                         StatistikaListView, MyOrdersListView)
 
+
 urlpatterns = [
     path('', ProductListView.as_view(), name='products'),
     path('main', MainTemplateView.as_view(), name='main'),
