@@ -1,5 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Count, Q
+from django.db.models import Count, Q, Sum
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
@@ -217,34 +217,28 @@ class StatistikaListView(LoginRequiredMixin, ListView):
         yetkazildi=Count('orders', filter=Q(orders__status='yetkazildi')),
         kiyin_oladi=Count('orders', filter=Q(orders__status='kiyin_oladi')),
         bekor_qilindi=Count('orders', filter=Q(orders__status='bekor_qilindi'))
-    ).all()
+    ).select_related('product')
     template_name = 'apps/product/statistika.html'
-    context_object_name = 'statistika'
+    context_object_name = 'streams'
 
     def get_queryset(self):
         return super().get_queryset().filter(user=self.request.user)
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(object_list=object_list, **kwargs)
-        jami = yangi = arxiv = y_tayyor = yetkazildi = k_oladi = b_qilindi = 0
-        for i in context['statistika']:
-            jami += i.count
-            yangi += i.yangi
-            arxiv += i.arxivlandi
-            y_tayyor += i.yetkazishga_tayyor
-            yetkazildi += i.yetkazildi
-            k_oladi += i.kiyin_oladi
-            b_qilindi += i.bekor_qilindi
-        context['jami'] = jami
-        context['yangi'] = yangi
-        context['arxiv'] = arxiv
-        context['y_tayyor'] = y_tayyor
-        context['yetkazildi'] = yetkazildi
-        context['k_oladi'] = k_oladi
-        context['b_qilindi'] = b_qilindi
+        qs = self.get_queryset()
+        context.update(**qs.aggregate(
+            visit_total=Sum('count'),
+            yangi_total=Sum('yangi'),
+            arxivlandi_total=Sum('arxivlandi'),
+            yetkazishga_tayyor_total=Sum('yetkazishga_tayyor'),
+            yetkazildi_total=Sum('yetkazildi'),
+            kiyin_oladi_total=Sum('kiyin_oladi'),
+            bekor_qilindi_total=Sum('bekor_qilindi'),
+        ))
         return context
 
-# 883149904
+
 class MyOrdersListView(LoginRequiredMixin, ListView):
     queryset = Order.objects.all()
     template_name = 'apps/product/my_orders.html'
@@ -252,6 +246,13 @@ class MyOrdersListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return super().get_queryset().filter(user=self.request.user)
+
+
+class SurovlarListView(LoginRequiredMixin, ListView):
+    queryset = Stream.objects.all()
+    template_name = 'apps/product/surovlar.html'
+    context_object_name = 'aktiv_list'
+
 
 
 

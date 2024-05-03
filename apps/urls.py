@@ -15,7 +15,7 @@ from apps.views import (MainTemplateView, ProfileTemplateView,
                         OrderWAITINGListView, MarketListView,
                         StreamFormView, StreamListView,
                         StatistikaListView, MyOrdersListView)
-
+from apps.views.product import SurovlarListView
 
 urlpatterns = [
     path('', ProductListView.as_view(), name='products'),
@@ -59,6 +59,7 @@ urlpatterns += [
     path('stream', StreamFormView.as_view(), name='stream'),
     path('stream-list', StreamListView.as_view(), name='stream_list'),
     path('statistika', StatistikaListView.as_view(), name='statistika'),
+    path('surovlar', SurovlarListView.as_view(), name='surovlar'),
 
 ]
 

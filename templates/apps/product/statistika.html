@@ -55,18 +55,18 @@
 
                     <tbody class="text-center">
 
-                    {% for oqim in statistika %}
+                    {% for stream in streams %}
                     
                     <tr>
-                        <th>{{ oqim.name }}</th>
-                        <th>{{ oqim.product.name }}</th>   
-                        <td>{{ oqim.count }}</td>
-                        <td>{{ oqim.yangi }}</td>
-                        <td>{{ oqim.yetkazishga_tayyor }}</td>
-                        <td>{{ oqim.yetkazildi }}</td>
-                        <td>{{ oqim.kiyin_oladi }}</td>
-                        <td>{{ oqim.bekor_qilindi }}</td>
-                        <td>{{ oqim.arxivlandi }}</td>
+                        <th>{{ stream.name }}</th>
+                        <th>{{ stream.product.name }}</th>   
+                        <td>{{ stream.count }}</td>
+                        <td>{{ stream.yangi }}</td>
+                        <td>{{ stream.yetkazishga_tayyor }}</td>
+                        <td>{{ stream.yetkazildi }}</td>
+                        <td>{{ stream.kiyin_oladi }}</td>
+                        <td>{{ stream.bekor_qilindi }}</td>
+                        <td>{{ stream.arxivlandi }}</td>
                     </tr>
                     
                     {% endfor %}
@@ -74,13 +74,13 @@
                     <tr class="bg-info">
                         <td> JAMI</td>
                         <td></td>
-                        <td> {{ jami }}</td>
-                        <td> {{ yangi }}</td>
-                        <td> {{ y_tayyor }}</td>
-                        <td> {{ yetkazildi }}</td>
-                        <td> {{ k_oladi }}</td>
-                        <td> {{ b_qilindi }}</td>
-                        <td> {{ arxiv }}</td>
+                        <td> {{ visit_total }}</td>
+                        <td> {{ yangi_total }}</td>
+                        <td> {{ arxivlandi_total }}</td>
+                        <td> {{ yetkazishga_tayyor_total }}</td>
+                        <td> {{ yetkazildi_total }}</td>
+                        <td> {{ kiyin_oladi_total }}</td>
+                        <td> {{ bekor_qilindi_total }}</td>
                     </tr>
                     </tbody>
                 </table>

@@ -1,3 +1,14 @@
+ {% extends 'apps/base.html' %}
+{% load static %}
+{% load humanize %}
+{% load custom_tags %}
+
+{% block title %}
+    Market
+{% endblock %}
+
+{% block main_content %}
+    
  <div class="card mb-3">
         <div class="card-body">
             <div class="container">
@@ -129,3 +140,21 @@
             </div>
         </div>
     </div>
+    
+{% include 'apps/parts/footer.html' %}
+{% endblock %}
+
+
+{% block javascript %}
+    <script>
+        $('.btn_open_modal').on('click', function () {
+            let product_id = $(this).attr('name');
+            console.log(product_id);
+            $('#hidden_product').val(product_id);
+        })
+    </script>
+{% endblock %}
+
+
+
+
