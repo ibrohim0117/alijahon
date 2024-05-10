@@ -211,7 +211,7 @@ class StreamDetailView(DetailView):
 
 class StatistikaListView(LoginRequiredMixin, ListView):
     queryset = Stream.objects.annotate(
-        yangi=Count('orders', filter=Q(orders__status='yangi')),
+        yangi=Count('orders', filter=Q(orders__status=Order.Status.NEW)),
         arxivlandi=Count('orders', filter=Q(orders__status='arxivlandi')),
         yetkazishga_tayyor=Count('orders', filter=Q(orders__status='yetkazishga_tayyor')),
         yetkazildi=Count('orders', filter=Q(orders__status='yetkazildi')),
