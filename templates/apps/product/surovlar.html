@@ -30,21 +30,25 @@
 
                         <tbody class="text-center">
 
-                            <tr
+                        {% for aktiv in aktiv_list %}
+                        	<tr
                                 style="text-align: center;">
-                                <th scope="col">1752918</th>
-                                <th scope="col"></th>
-                                <th scope="col">Genger sovun</th>
-                                <th scope="col">500 qoshdik</th>
-                                <th scope="col">fdsfjgj</th>
-                                <th scope="col">tashkent</th>
+                                <th scope="col">{{ aktiv.id }}</th>
+                                <th scope="col">{{ aktiv.operator_id|default_if_none:"" }}</th>
+                                <th scope="col">{{ aktiv.product.name }}</th>
+                                <th scope="col">{{ aktiv.stream.name }}</th>
+                                <th scope="col">{{ aktiv.user.first_name }}</th>
+                                <th scope="col">{{ aktiv.region.name }}</th>
                                 <th scope="col">
-                                    yangi
+                                    {{ aktiv.get_status_display }}
 
                                 </th>
-                                <th scope="col"></th>
+                                <th scope="col">{{ aktiv.comment|default_if_none:"" }}</th>
                                 <th scope="col">29-Aprel, 2024-yil 21:05</th>
                             </tr>
+                        {% endfor %}
+
+
 
 
                         </tbody>

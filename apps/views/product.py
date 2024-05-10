@@ -250,12 +250,12 @@ class MyOrdersListView(LoginRequiredMixin, ListView):
 
 
 class SurovlarListView(LoginRequiredMixin, ListView):
-    queryset = Stream.objects.all()
+    queryset = Order.objects.all()
     template_name = 'apps/product/surovlar.html'
     context_object_name = 'aktiv_list'
 
-
-
+    def get_queryset(self):
+        return super().get_queryset().filter(user=self.request.user)
 
 # Stream.objects.annotate(new_count=Count('orders', filter=Q(orders__status='yangi')),
 # cancel_count=Count('orders', filter=Q(orders__status='arxivlandi'))).values('name', 'product__name', 'count', 'new_count', 'cancel_count')
