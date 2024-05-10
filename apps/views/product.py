@@ -57,7 +57,7 @@ class WishlistCreateView(LoginRequiredMixin, View):
         return redirect('/')
 
 
-class ShoppingListView(ListView):
+class ShoppingListView(LoginRequiredMixin, ListView):
     template_name = 'apps/product/shopping-cart.html'
     queryset = Wishlist.objects.all()
     context_object_name = 'wishlists'
@@ -189,13 +189,14 @@ class StreamFormView(LoginRequiredMixin, FormView):
         return redirect('market')
 
 
+
 class StreamListView(LoginRequiredMixin, TemplateView):
     # queryset = Stream.objects.all()
     template_name = 'apps/product/stream-list.html'
     # context_object_name = 'streams'
     #
-    # def get_queryset(self):
-    #     return super().get_queryset().filter(user=self.request.user)
+    def get_queryset(self):
+        return super().get_queryset().filter(user=self.request.user)
 
 
 class StreamDetailView(DetailView):

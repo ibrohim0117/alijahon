@@ -146,6 +146,7 @@ class Stream(BaseModel):
     class Meta:
         verbose_name = 'Oqim'
         verbose_name_plural = 'Oqimlar'
+        ordering = ['-id']
 
     def __str__(self):
         return f'{self.product.name} --> {self.user}'

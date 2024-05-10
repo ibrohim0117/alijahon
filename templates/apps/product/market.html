@@ -23,7 +23,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form method="POST" action="{% url 'stream_list' %}" class="form-class">
+                            <form method="POST" action="{% url 'stream' %}" class="form-class">
                                 {% csrf_token %}
                                 <input name="product" type="hidden" id="hidden_product" value="test">
 
@@ -126,7 +126,7 @@
                                         data-bs-target="#exampleModal" name="{{ product.id }}">
                                     Oqim yaratish
                                 </button>
-                                <a href="/admin_page/product/389" class="btn bg-danger text-white mt-2">Batafsil</a>
+                                <a href="{% url 'stream' %}" class="btn bg-danger text-white mt-2">Batafsil</a>
                             </div>
                         </div>
                         

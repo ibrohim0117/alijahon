@@ -143,6 +143,8 @@
 
 
                         <hr class="mb-0 navbar-vertical-divider"/>
+                    {% if user.is_authenticated %}
+                    	
                         <ul class="nav collapse show" id="dashboard">
                             <li class="nav-item">
                                 <a class="nav-link active" href="{% url 'market' %}" aria-expanded="false">
@@ -192,6 +194,8 @@
                                 </a>
                             </li>
                         </ul>
+                        
+                    {% endif %}
 
                 </li>
             </ul>
