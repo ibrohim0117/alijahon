@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count, Q, Sum
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404, render
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView, FormView
@@ -17,6 +17,14 @@ class ProductListView(ListView):
     context_object_name = 'products'
     paginate_by = 6
     ordering = ('-id', )
+
+    def get_queryset(self):
+        name = self.request.GET.get('search')
+        qs = super().get_queryset()
+        if name is not None and len(name) > 0:
+            qs = qs.filter(name__icontains=name)
+
+        return qs
 
 
 class ProductDetailView(DetailView):
@@ -259,6 +267,9 @@ class SurovlarListView(LoginRequiredMixin, ListView):
 
 # Stream.objects.annotate(new_count=Count('orders', filter=Q(orders__status='yangi')),
 # cancel_count=Count('orders', filter=Q(orders__status='arxivlandi'))).values('name', 'product__name', 'count', 'new_count', 'cancel_count')
+
+
+
 
 
 

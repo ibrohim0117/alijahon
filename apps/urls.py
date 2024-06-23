@@ -28,10 +28,11 @@ urlpatterns = [
     path('stream-list/<int:pk>/', ProductDetailView.as_view(), name='stream_detail'),
     path('liked/<slug:slug>', WishlistCreateView.as_view(), name='wishlist'),
     path('success-product/<int:pk>', OrderSuccessTemplateView.as_view(), name='success_product'),
+    # path('search', search_product, name='search'),
 
 
     path('register', RegisterCreateView.as_view(), name='register'),
-    path('login', LoginFormView.as_view(), name='login'),
+    path('login/', LoginFormView.as_view(), name='login'),
     path('confirm_mail', ConfirmMailTemplateView.as_view(), name='confirm_mail'),
     path('forget_password', ForgetPasswordTemplateView.as_view(), name='forget_password'),
     path('lockscreen', LockScreenTemplateView.as_view(), name='lockscreen'),
