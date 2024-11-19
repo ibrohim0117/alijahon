@@ -143,6 +143,7 @@ class Stream(BaseModel):
     count = IntegerField(default=0)
     product = ForeignKey('apps.Product', CASCADE, related_name='streams')
 
+
     class Meta:
         verbose_name = 'Oqim'
         verbose_name_plural = 'Oqimlar'
